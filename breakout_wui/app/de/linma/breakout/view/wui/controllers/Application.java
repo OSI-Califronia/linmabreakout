@@ -21,7 +21,7 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.GameController;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.User;
-import de.luma.breakout.view.wui.controllers.routes;
+import de.linma.breakout.view.wui.controllers.routes;
 
 /**
  * Main controller of Play application 
@@ -29,7 +29,7 @@ import de.luma.breakout.view.wui.controllers.routes;
 public class Application extends Controller  {
     
 	private static IGameController gameController;	  // static game instance
-	private static final String USER_NAME = "luma.webtech";
+	private static final String USER_NAME = "linma.webtech";
 	private static final String USER_PW = "900150983cd24fb0d6963f7d28e17f72";
 	
 	static {
@@ -81,7 +81,7 @@ public class Application extends Controller  {
 			return redirect(routes.Application.socket_index());
 		}
 		
-		return ok(de.luma.breakout.view.wui.views.html.login.render(""));
+		return ok(de.linma.breakout.view.wui.views.html.login.render(""));
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class Application extends Controller  {
 			return redirect(routes.Application.socket_index());
 		}
 		
-		return ok(de.luma.breakout.view.wui.views.html.login.render("Username or password are wrong."));
+		return ok(de.linma.breakout.view.wui.views.html.login.render("Username or password are wrong."));
 	}
 	
 	
@@ -150,7 +150,7 @@ public class Application extends Controller  {
 	 */
     @play.mvc.Security.Authenticated(Secured.class)
     public static Result socket_index() {
-    	return ok(de.luma.breakout.view.wui.views.html.socket_index.render());
+    	return ok(de.linma.breakout.view.wui.views.html.socket_index.render());
     }
     
     /**
@@ -170,7 +170,7 @@ public class Application extends Controller  {
 	 */
 	@play.mvc.Security.Authenticated(Secured.class)
     public static Result index() {		
-    	return ok(de.luma.breakout.view.wui.views.html.index.render());
+    	return ok(de.linma.breakout.view.wui.views.html.index.render());
     }
     
 	

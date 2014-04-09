@@ -15,7 +15,7 @@
   
   <build>
 		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
+		<!--<testSourceDirectory>test</testSourceDirectory>-->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -28,7 +28,13 @@
 			
 		</plugins>
 	</build>
-	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>lenny2</id>
+			<name>lenny2-snapshots</name>
+			<url>http://lenny2.in.htwg-konstanz.de:8081/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
 	
 	<dependencies>
 		<dependency>
@@ -37,6 +43,11 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		 </dependency>
 	</dependencies>
   
 </project>

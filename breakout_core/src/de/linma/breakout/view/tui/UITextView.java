@@ -152,7 +152,7 @@ public class UITextView implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateGameMenu(de.luma.breakout.communication.ObservableGame.MENU_ITEM[], java.lang.String)
+	 * @see de.linma.breakout.communication.IGameObserver#updateGameMenu(de.linma.breakout.communication.ObservableGame.MENU_ITEM[], java.lang.String)
 	 */
 	public void updateGameMenu(MENU_ITEM[] menuItems, String title) {		
 
@@ -165,7 +165,7 @@ public class UITextView implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateGameFrame()
+	 * @see de.linma.breakout.communication.IGameObserver#updateGameFrame()
 	 */
 	public void updateGameFrame() {
 		// not used yet
@@ -173,12 +173,12 @@ public class UITextView implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateOnResize()
+	 * @see de.linma.breakout.communication.IGameObserver#updateOnResize()
 	 */
 	public void updateOnResize() { }
 
 	private Logger getLogger() {
-		return Logger.getLogger("de.luma.breakout.view.tui.UITextView");
+		return Logger.getLogger("de.linma.breakout.view.tui.UITextView");
 	}
 
 	private void printMsg(String format, Object... b) {

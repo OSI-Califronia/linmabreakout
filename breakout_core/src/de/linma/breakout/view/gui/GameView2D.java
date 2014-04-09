@@ -235,7 +235,7 @@ public class GameView2D extends JPanel implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateRepaintPlayGrid()
+	 * @see de.linma.breakout.communication.IGameObserver#updateRepaintPlayGrid()
 	 */
 	public void updateRepaintPlayGrid() {	
 		repaint();		
@@ -243,7 +243,7 @@ public class GameView2D extends JPanel implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateGameFrame()
+	 * @see de.linma.breakout.communication.IGameObserver#updateGameFrame()
 	 */
 	public void updateGameFrame() {
 		if (leftKeyPressed) {
@@ -256,7 +256,7 @@ public class GameView2D extends JPanel implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateGameState(de.luma.breakout.communication.ObservableGame.GAME_STATE)
+	 * @see de.linma.breakout.communication.IGameObserver#updateGameState(de.linma.breakout.communication.ObservableGame.GAME_STATE)
 	 */
 	public void updateGameState(GAME_STATE state) {
 
@@ -312,7 +312,7 @@ public class GameView2D extends JPanel implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateGameMenu(de.luma.breakout.communication.ObservableGame.MENU_ITEM[], java.lang.String)
+	 * @see de.linma.breakout.communication.IGameObserver#updateGameMenu(de.linma.breakout.communication.ObservableGame.MENU_ITEM[], java.lang.String)
 	 */
 	public void updateGameMenu(MENU_ITEM[] menuItems, String title) {
 		this.selectedItem = 0;
@@ -548,7 +548,7 @@ public class GameView2D extends JPanel implements IGameObserver {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.communication.IGameObserver#updateOnResize()
+	 * @see de.linma.breakout.communication.IGameObserver#updateOnResize()
 	 */
 	public void updateOnResize() {
 		Dimension viewSize = getController().getGridSize();

@@ -356,7 +356,7 @@ public class GameController extends ObservableGame implements IGameController {
 	
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getState()
+	 * @see de.linma.breakout.controller.IGameController#getState()
 	 */
 	public GAME_STATE getState() {
 		return state;
@@ -370,7 +370,7 @@ public class GameController extends ObservableGame implements IGameController {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getCreativeMode()
+	 * @see de.linma.breakout.controller.IGameController#getCreativeMode()
 	 */
 	public boolean getCreativeMode() {
 		return isInCreativeMode;
@@ -387,7 +387,7 @@ public class GameController extends ObservableGame implements IGameController {
 	/* #######################################  LEVEL HANDLING #######################################   */
 	
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#saveLevel()
+	 * @see de.linma.breakout.controller.IGameController#saveLevel()
 	 */
 	public String saveLevel() {		
 		String filepath = LEVEL_PATH + "userLevel" + System.nanoTime() + ".lvl";
@@ -399,7 +399,7 @@ public class GameController extends ObservableGame implements IGameController {
 	}	
 	
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#saveLevel(java.io.File)
+	 * @see de.linma.breakout.controller.IGameController#saveLevel(java.io.File)
 	 */
 	public boolean saveLevel(File f)  {
 		PrintWriter out = null;
@@ -445,7 +445,7 @@ public class GameController extends ObservableGame implements IGameController {
 	
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#loadLevel(java.io.File)
+	 * @see de.linma.breakout.controller.IGameController#loadLevel(java.io.File)
 	 */
 	public boolean loadLevel(File f) {
 		Scanner s = null;
@@ -546,14 +546,14 @@ public class GameController extends ObservableGame implements IGameController {
 	
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getGridSize()
+	 * @see de.linma.breakout.controller.IGameController#getGridSize()
 	 */
 	public Dimension getGridSize() {
 		return new Dimension(getGrid().getWidth(), getGrid().getHeight());
 	}
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getBrickClasses()
+	 * @see de.linma.breakout.controller.IGameController#getBrickClasses()
 	 */
 	public List<IBrick> getBrickClasses() {
 		return getGrid().getBrickClasses();
@@ -561,49 +561,49 @@ public class GameController extends ObservableGame implements IGameController {
 	
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getGameMenu()
+	 * @see de.linma.breakout.controller.IGameController#getGameMenu()
 	 */
 	public GameMenu getGameMenu() {
 		return menu;
 	}
 	
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getBalls()
+	 * @see de.linma.breakout.controller.IGameController#getBalls()
 	 */
 	public List<IBall> getBalls() {	
 		return getGrid().getBalls();
 	}
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#addBall(de.luma.breakout.data.objects.Ball)
+	 * @see de.linma.breakout.controller.IGameController#addBall(de.linma.breakout.data.objects.Ball)
 	 */
 	public void addBall(IBall ball) {
 		getGrid().addBall(ball);		
 	}
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getBricks()
+	 * @see de.linma.breakout.controller.IGameController#getBricks()
 	 */
 	public List<IBrick> getBricks() {
 		return getGrid().getBricks();
 	}
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#addBrick(de.luma.breakout.data.objects.AbstractBrick)
+	 * @see de.linma.breakout.controller.IGameController#addBrick(de.linma.breakout.data.objects.AbstractBrick)
 	 */
 	public void addBrick(IBrick brick) {
 		getGrid().addBrick(brick);
 	}
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#getSlider()
+	 * @see de.linma.breakout.controller.IGameController#getSlider()
 	 */
 	public IBrick getSlider() {
 		return getGrid().getSlider();
 	}
 
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#setSlider(de.luma.breakout.data.objects.Slider)
+	 * @see de.linma.breakout.controller.IGameController#setSlider(de.linma.breakout.data.objects.Slider)
 	 */
 	public void setSlider(IBrick slider) {
 		getGrid().setSlider(slider);
@@ -611,7 +611,7 @@ public class GameController extends ObservableGame implements IGameController {
 	
 	
 	/** (non-Javadoc)
-	 * @see de.luma.breakout.controller.IGameController#clearGrid()
+	 * @see de.linma.breakout.controller.IGameController#clearGrid()
 	 */
 	public void clearGrid() {
 		getGrid().clearGrid();	

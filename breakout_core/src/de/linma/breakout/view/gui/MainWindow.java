@@ -118,7 +118,7 @@ public class MainWindow extends JFrame implements IGuiManager {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.view.gui.IGuiManager#updateLayout()
+	 * @see de.linma.breakout.view.gui.IGuiManager#updateLayout()
 	 */
 	public void updateLayout() {
 		this.pack();
@@ -126,7 +126,7 @@ public class MainWindow extends JFrame implements IGuiManager {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.view.gui.IGuiManager#kill()
+	 * @see de.linma.breakout.view.gui.IGuiManager#kill()
 	 */
 	public void kill() {
 		this.dispose();	
@@ -134,7 +134,7 @@ public class MainWindow extends JFrame implements IGuiManager {
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.luma.breakout.view.gui.IGuiManager#getGameController()
+	 * @see de.linma.breakout.view.gui.IGuiManager#getGameController()
 	 */
 	public IGameController getGameController() {
 		return controller;
