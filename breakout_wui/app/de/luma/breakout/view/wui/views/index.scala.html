@@ -1,0 +1,96 @@
+@main("Breakout") {
+	
+	<div class="TechInfo">
+		AJAX-Polling<br />
+		Welcome @de.luma.breakout.view.wui.controllers.Application.getActiveUser()
+		<br >
+		<a href="logout">[Logout]</a>
+	</div>
+
+	<div id="PlayGrid">
+		<!--  AJAX-filled with game grid / menus -->
+	</div>
+
+
+	<script type="text/javascript">
+	
+	$(document).ready(function() {
+
+		isLeft = 0;  // left/right keys pressed?
+		isRight = 0;
+
+		function refresh() {
+
+			// check if left/right is pressed
+			if (isLeft == 1) {
+				$.get('/gameInput?key=left');
+			}
+			if (isRight == 1) {
+				$.get('/gameInput?key=right');
+			}
+			
+			$.get('/playGrid')
+			.done(function (data, textStatus, jqXHR) {
+				// response is json result (-> level selection dialog)
+				if (jqXHR.getResponseHeader('content-type') == 'Application.levellist') {
+					var levelList = jQuery.parseJSON(data);
+
+					var levelDOM = $( document.createElement('div') ).addClass('LevelSelect');
+					$.each(levelList, function(key, value) {
+						levelDOM.append('<a class="levelButton" data-level="' + value + '">' + (key + 1) + '</a>');
+					});
+
+					$('#PlayGrid').html(levelDOM);
+					
+				// response is html (-> play grid or menu items)
+				} else {
+					$('#PlayGrid').html(data);
+				}
+			}).fail(function () {
+				console.error('ajax error');
+			});
+			setTimeout(function() {refresh(); }, 33);  // set timer for polling
+		}
+
+		// key pressed
+		$('body').keydown(function(event) {
+			if (event.which == 37) {
+				isLeft = 1;
+			} else if (event.which == 39) {
+				isRight = 1;
+			}
+		});
+
+		// key released
+		$('body').keyup(function(event) {
+			if (event.which == 27) {
+				$.get('/gameInput?key=escape').done(refresh);
+			} else if (event.which == 37) {
+				isLeft = 0;
+			} else if (event.which == 39) {
+				isRight = 0;
+			}
+		});
+	
+		/* click handler for menu items */
+		$('#PlayGrid').on('mousedown', 'a.MenuItem', function (e) {
+			e.preventDefault();
+			document.location.href = '/selectmenu?index=' + $(this).attr('data-menuindex');
+			return false;
+		});
+
+		/* click handler for level buttons */
+		$('#PlayGrid').on('mousedown', 'a.levelButton', function (e) {
+			e.preventDefault();
+			var url = '/loadLevel?file=' + $(this).attr('data-level');
+			$.get(url);
+			return false;
+		});
+
+	
+		setTimeout(function() {refresh(); }, 1);  // get first game frame
+	
+	});
+	</script>
+
+}

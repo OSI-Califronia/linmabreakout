@@ -1,0 +1,88 @@
+body {
+	background-color: black;
+	color: white;
+	padding: 0;
+	margin: 0;
+}
+
+h1, .TechInfo {
+	font-size: 18pt;
+	text-align: center;
+	font-family: Impact, sans-serif;
+}
+
+.TechInfo {
+	position: fixed;
+	text-align: right;
+	right: 20px;
+	top: 20px;
+}
+
+.PlayGrid {
+	margin: auto;
+	width: 800px;
+	height: 800px;
+	border: 2px solid white;
+}
+
+.MenuContainer {
+	width: 100%;
+}
+
+.MenuItem {
+	margin: auto;
+	display: block;
+	width: 440px;
+	height: 134px;
+	background-image: url('/assets/images/button.png');
+	text-align: center;
+	font-size: 16pt;
+	padding-top: 53px;
+	color: white;
+	text-decoration: none;
+}
+
+.MenuItem:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.MenuItem:focus {
+	background-image: url('/assets/images/button_selected.png');
+	color: white;
+	text-decoration: none;
+	outline: none;
+}
+
+.GameGridContainer { 
+	position: relative;
+	margin: auto;
+	border: 2px solid white;
+	overflow: hidden;
+}
+
+.Brick, .Ball {
+	position: absolute;
+}
+
+.LevelSelect {
+	margin: auto;
+	width: 800px;
+}
+
+.levelButton, .levelButton:hover {
+	display: block;
+	float: left;
+	width: 100px;
+	height: 100px;
+	background-image: url('/assets/images/levelbutton.png');
+	background-repeat: no-repeat;
+	color: white;
+	text-decoration: none;
+	font-family: Impact, sans-serif;
+	font-weight: 200;
+	font-size: 36pt;
+	text-align: center;
+	padding-top: 15px;
+	cursor: pointer;
+}

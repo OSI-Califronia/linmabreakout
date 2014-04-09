@@ -1,0 +1,17 @@
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+/.idea
+/.cache
+/.target
+/*.iml
+/out
+/.idea_modules
+/RUNNING_PID
+/.settings
+/project/*-shim.sbt
+/bin
