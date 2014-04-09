@@ -1,4 +1,4 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import de.luma.breakout.controller.IGameController;
+import de.linma.breakout.controller.IGameController;
 
 /**
  * Main GUI window to hold the game view.

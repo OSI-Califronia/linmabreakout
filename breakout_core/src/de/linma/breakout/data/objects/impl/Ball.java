@@ -1,7 +1,7 @@
-package de.luma.breakout.data.objects.impl;
+package de.linma.breakout.data.objects.impl;
 
-import de.luma.breakout.data.objects.IBall;
-import de.luma.breakout.data.objects.IDecodable;
+import de.linma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IDecodable;
 
 /**
  * Data class for Ball Component

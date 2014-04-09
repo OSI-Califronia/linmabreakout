@@ -1,4 +1,4 @@
-package de.luma.breakout.controller;
+package de.linma.breakout.controller;
 
 import java.awt.Dimension;
 import java.io.BufferedWriter;
@@ -15,16 +15,16 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.luma.breakout.communication.GAME_STATE;
-import de.luma.breakout.communication.MENU_ITEM;
-import de.luma.breakout.communication.ObservableGame;
-import de.luma.breakout.communication.TextMapping;
-import de.luma.breakout.data.PlayGrid;
-import de.luma.breakout.data.menu.GameMenu;
-import de.luma.breakout.data.objects.IBall;
-import de.luma.breakout.data.objects.IBrick;
-import de.luma.breakout.data.objects.IDecodable;
-import de.luma.breakout.data.objects.impl.Slider;
+import de.linma.breakout.communication.GAME_STATE;
+import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.communication.ObservableGame;
+import de.linma.breakout.communication.TextMapping;
+import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.menu.GameMenu;
+import de.linma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.objects.IDecodable;
+import de.linma.breakout.data.objects.impl.Slider;
 
 /**
  * Game Controller 

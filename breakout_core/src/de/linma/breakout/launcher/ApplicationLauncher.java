@@ -1,4 +1,4 @@
-package de.luma.breakout.launcher;
+package de.linma.breakout.launcher;
 
 public class ApplicationLauncher {
 

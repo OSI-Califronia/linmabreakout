@@ -1,4 +1,4 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +11,7 @@ import java.io.File;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import de.luma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.communication.MENU_ITEM;
 
 /**
  * Panel to hold a button for each loadable level.

@@ -1,4 +1,4 @@
-package de.luma.breakout.data.objects;
+package de.linma.breakout.data.objects;
 
 import java.util.Properties;
 

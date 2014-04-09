@@ -1,4 +1,4 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,14 +16,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
-import de.luma.breakout.communication.GAME_STATE;
-import de.luma.breakout.communication.IGameObserver;
-import de.luma.breakout.communication.MENU_ITEM;
-import de.luma.breakout.communication.TextMapping;
-import de.luma.breakout.controller.IGameController;
-import de.luma.breakout.data.objects.IBall;
-import de.luma.breakout.data.objects.IBrick;
-import de.luma.breakout.data.objects.impl.Ball;
+import de.linma.breakout.communication.GAME_STATE;
+import de.linma.breakout.communication.IGameObserver;
+import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.communication.TextMapping;
+import de.linma.breakout.controller.IGameController;
+import de.linma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.objects.impl.Ball;
 
 
 /**

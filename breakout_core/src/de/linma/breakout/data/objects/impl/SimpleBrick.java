@@ -1,4 +1,4 @@
-package de.luma.breakout.data.objects.impl;
+package de.linma.breakout.data.objects.impl;
 
 import java.awt.Color;
 

@@ -1,8 +1,8 @@
-package de.luma.breakout.data.objects.impl;
+package de.linma.breakout.data.objects.impl;
 
 import java.awt.Color;
 
-import de.luma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IBall;
 
 /**
  * Data class for a Moving brick.

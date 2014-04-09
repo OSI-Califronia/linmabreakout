@@ -1,4 +1,4 @@
-package de.luma.breakout.communication;
+package de.linma.breakout.communication;
 
 import java.util.LinkedList;
 import java.util.List;

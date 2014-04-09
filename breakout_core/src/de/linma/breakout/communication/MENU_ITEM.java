@@ -1,4 +1,4 @@
-package de.luma.breakout.communication;
+package de.linma.breakout.communication;
 
 /**
  * Types of menu items.

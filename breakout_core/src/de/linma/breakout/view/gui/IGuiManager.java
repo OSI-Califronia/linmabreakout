@@ -1,10 +1,10 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 
-import de.luma.breakout.controller.IGameController;
+import de.linma.breakout.controller.IGameController;
 
 /**
  * Interface to GUI.

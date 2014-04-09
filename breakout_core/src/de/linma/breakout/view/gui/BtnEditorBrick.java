@@ -1,4 +1,4 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -6,7 +6,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JButton;
 
-import de.luma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.objects.IBrick;
 
 /**
  * Btn for a Brick to Choose.

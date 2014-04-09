@@ -1,4 +1,4 @@
-package de.luma.breakout.data.user;
+package de.linma.breakout.data.user;
 
 public class User {
 	

@@ -1,15 +1,15 @@
-package de.luma.breakout.controller;
+package de.linma.breakout.controller;
 
 import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
 
-import de.luma.breakout.communication.GAME_STATE;
-import de.luma.breakout.communication.IObservableGame;
-import de.luma.breakout.communication.MENU_ITEM;
-import de.luma.breakout.data.menu.GameMenu;
-import de.luma.breakout.data.objects.IBall;
-import de.luma.breakout.data.objects.IBrick;
+import de.linma.breakout.communication.GAME_STATE;
+import de.linma.breakout.communication.IObservableGame;
+import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.data.menu.GameMenu;
+import de.linma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IBrick;
 
 /**
  * Interface for Gamecontroller

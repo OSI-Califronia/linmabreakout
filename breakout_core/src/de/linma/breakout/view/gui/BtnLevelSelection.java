@@ -1,4 +1,4 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.Dimension;
 import java.awt.FontMetrics;

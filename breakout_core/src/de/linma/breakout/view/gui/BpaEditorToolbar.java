@@ -1,4 +1,4 @@
-package de.luma.breakout.view.gui;
+package de.linma.breakout.view.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import de.luma.breakout.communication.MENU_ITEM;
-import de.luma.breakout.data.objects.IBrick;
-import de.luma.breakout.data.objects.impl.Slider;
+import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.objects.impl.Slider;
 
 /**
  * Toolbar for save load and reset

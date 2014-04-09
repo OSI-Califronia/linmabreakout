@@ -1,15 +1,15 @@
-package de.luma.breakout.data;
+package de.linma.breakout.data;
 
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.luma.breakout.data.objects.IBall;
-import de.luma.breakout.data.objects.IBrick;
-import de.luma.breakout.data.objects.IDecodable;
-import de.luma.breakout.data.objects.impl.MovingBrick;
-import de.luma.breakout.data.objects.impl.SimpleBrick;
+import de.linma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.objects.IDecodable;
+import de.linma.breakout.data.objects.impl.MovingBrick;
+import de.linma.breakout.data.objects.impl.SimpleBrick;
 
 
 /**
