@@ -1,4 +1,0 @@
-linmabreakout
-=============
-
-Breakout Game
