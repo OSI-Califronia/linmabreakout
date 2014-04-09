@@ -2,7 +2,7 @@ import play.Project._
 
 name := """breakout_wui"""
 
-version := "1.0-SNAPSHOT"
+version := "0.0.1-SNAPSHOT"
 
 resolvers += "HTWG Resolver" at "http://lenny2.in.htwg-konstanz.de:8081/artifactory/libs-snapshot-local"
 

@@ -247,13 +247,13 @@ public class Application extends Controller  {
     	}
     	
     	if (key.equals("escape")) {
-			getGameController().processGameInput(PLAYER_INPUT.PAUSE);
+			getGameController().processGameInput(IGameController.PLAYER_INPUT.PAUSE);
     	} else if (key.equals("right")) {
-			getGameController().processGameInput(PLAYER_INPUT.RIGHT);
-			getGameController().processGameInput(PLAYER_INPUT.RIGHT);
+			getGameController().processGameInput(IGameController.PLAYER_INPUT.RIGHT);
+			getGameController().processGameInput(IGameController.PLAYER_INPUT.RIGHT);
 		} else if (key.equals("left")) {
-			getGameController().processGameInput(PLAYER_INPUT.LEFT);
-			getGameController().processGameInput(PLAYER_INPUT.LEFT);
+			getGameController().processGameInput(IGameController.PLAYER_INPUT.LEFT);
+			getGameController().processGameInput(IGameController.PLAYER_INPUT.LEFT);
 		}		
     	return ok();
     }

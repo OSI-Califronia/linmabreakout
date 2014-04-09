@@ -33,17 +33,14 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 		this.gameController = gameController;
 	}
 	
-	@Override
 	public void updateRepaintPlayGrid() {	}  // not required
  
-	@Override
 	public void updateOnResize() { }  // not required
 	
 	
 	/**
 	 * Notifies client of changed game state (JSON-formatted)
 	 */
-	@Override
 	public void updateGameState(GAME_STATE state) {
 		out.write("STATE:" + state);
 		
@@ -56,7 +53,6 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 	/**
 	 * Sends menu items to client (JSON-formatted)
 	 */
-	@Override
 	public void updateGameMenu(MENU_ITEM[] menuItems, String title) {	
 		System.out.println("updateGameMenu");
 	
@@ -66,7 +62,6 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 	/**
 	 * Sends the rendered play grid to the client.  (HTML)
 	 */
-	@Override
 	public void updateGameFrame() {
 		if (gameController.getState() != GAME_STATE.RUNNING) {
 			return;
@@ -85,12 +80,10 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 	/**
 	 * Handles incoming events from webbrowser
 	 */
-	@Override
 	public void onReady(play.mvc.WebSocket.In<String> in, play.mvc.WebSocket.Out<String> out) {
 		
 		// handler for incoming messages
 		in.onMessage(new Callback<String>() {
-			@Override
 			public void invoke(String event) throws Throwable {
 				// process key Input
 				if (event.startsWith("key:"))  {
@@ -115,7 +108,6 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 		
 		// handler when browser/tab is closed
 		in.onClose(new Callback0() {
-			@Override
 			public void invoke() throws Throwable {
 				GameWebSocket.this.gameController.removeObserver(GameWebSocket.this);
 			}
