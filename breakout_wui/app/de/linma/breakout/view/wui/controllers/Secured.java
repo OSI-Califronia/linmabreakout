@@ -1,5 +1,6 @@
-package de.luma.breakout.view.wui.controllers; 
+package de.linma.breakout.view.wui.controllers; 
 
+import de.luma.breakout.view.wui.controllers.routes;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security;

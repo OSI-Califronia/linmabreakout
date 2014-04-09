@@ -1,9 +1,9 @@
-package de.luma.breakout.data.objects.impl;
+package de.linma.breakout.data.objects.impl;
 
 import java.util.Properties;
 
-import de.luma.breakout.data.objects.IBall;
-import de.luma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.objects.IBall;
+import de.linma.breakout.data.objects.IBrick;
 
 /**
  * Class for ground component of Game

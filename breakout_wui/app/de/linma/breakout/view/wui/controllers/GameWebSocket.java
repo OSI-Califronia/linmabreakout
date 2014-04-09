@@ -1,4 +1,4 @@
-package de.luma.breakout.view.wui.controllers;
+package de.linma.breakout.view.wui.controllers;
 
 import java.io.File;
 
@@ -9,11 +9,11 @@ import play.mvc.WebSocket;
 
 import com.google.gson.Gson;
 
-import de.luma.breakout.communication.GAME_STATE;
-import de.luma.breakout.communication.IGameObserver;
-import de.luma.breakout.communication.MENU_ITEM;
-import de.luma.breakout.controller.IGameController;
-import de.luma.breakout.controller.IGameController.PLAYER_INPUT;
+import de.linma.breakout.communication.GAME_STATE;
+import de.linma.breakout.communication.IGameObserver;
+import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.controller.IGameController;
+import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
 
 /**
  * Manages a WebSocket connection to a client.
@@ -72,7 +72,7 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 			return;
 		}
 		
-		Html playGrid = de.luma.breakout.view.wui.views.html.gamegrid.render(
+		Html playGrid = de.linma.breakout.view.wui.views.html.gamegrid.render(
 				gameController.getGridSize().width,
 				gameController.getGridSize().height,
 				HtmlHelper.getBricks(gameController), 

@@ -1,4 +1,4 @@
-package de.luma.breakout.view.wui.controllers;
+package de.linma.breakout.view.wui.controllers;
 
 import java.io.File;
 import java.util.HashMap;
@@ -16,12 +16,12 @@ import play.mvc.WebSocket;
 
 import com.google.gson.Gson;
 
-import de.luma.breakout.communication.GAME_STATE;
-import de.luma.breakout.communication.MENU_ITEM;
-import de.luma.breakout.controller.GameController;
-import de.luma.breakout.controller.IGameController;
-import de.luma.breakout.controller.IGameController.PLAYER_INPUT;
-import de.luma.breakout.data.user.User;
+import de.linma.breakout.communication.GAME_STATE;
+import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.controller.GameController;
+import de.linma.breakout.controller.IGameController;
+import de.linma.breakout.data.user.User;
+import de.luma.breakout.view.wui.controllers.routes;
 
 /**
  * Main controller of Play application 
@@ -181,7 +181,7 @@ public class Application extends Controller  {
     public static Result playGrid() {
    	
     	if (getGameController().getState() == GAME_STATE.RUNNING) {   // render playgrid (game is running)
-    		return ok(de.luma.breakout.view.wui.views.html.gamegrid.render(
+    		return ok(de.linma.breakout.view.wui.views.html.gamegrid.render(
     				getGameController().getGridSize().width,
     				getGameController().getGridSize().height,
     				HtmlHelper.getBricks(gameController), HtmlHelper.getBalls(gameController)));
@@ -190,7 +190,7 @@ public class Application extends Controller  {
     		return getLevels();
     		
     	} else {  // render menu items
-    		return ok(de.luma.breakout.view.wui.views.html.menu.render(HtmlHelper.getMenu(
+    		return ok(de.linma.breakout.view.wui.views.html.menu.render(HtmlHelper.getMenu(
     				gameController.getGameMenu().getMenuItems(),
     				gameController.getGameMenu().getTitle())));
     	}

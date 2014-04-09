@@ -1,6 +1,6 @@
-package de.luma.breakout.data.menu;
+package de.linma.breakout.data.menu;
 
-import de.luma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.communication.MENU_ITEM;
 
 public class GameMenu {
 
