@@ -18,7 +18,7 @@ public class TestUITextView extends TestCase {
 		System.out.println("setUp()\n");
 
 		// create controller
-		controller = new GameController(this.getClass().getName());
+		controller = new GameController("test\\");
 		controller.clearGrid();
 
 

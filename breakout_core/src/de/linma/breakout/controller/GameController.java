@@ -190,7 +190,6 @@ public class GameController extends ObservableGame implements IGameController {
 		resetTimer();
 		timer.scheduleAtFixedRate(task, 0, FRAME_DELAY);
 		setState(GAME_STATE.RUNNING);
-
 	}
 	
 
