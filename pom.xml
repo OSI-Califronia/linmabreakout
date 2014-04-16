@@ -23,6 +23,14 @@
 			
 		</dependencies>
 	</dependencyManagement>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>lenny2</id>
+			<name>lenny2-snapshots</name>
+			<url>http://lenny2.in.htwg-konstanz.de:8081/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<build>
 		<plugins>			
