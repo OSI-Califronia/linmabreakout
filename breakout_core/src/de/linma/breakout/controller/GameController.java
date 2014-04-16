@@ -15,6 +15,10 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
+
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.ObservableGame;
@@ -52,6 +56,9 @@ public class GameController extends ObservableGame implements IGameController {
 			updateGame();			
 		}		
 	}	
+
+	private Logger logger = Logger.getLogger(GameController.class);
+	
 	private String appPath; // base directory of application 
 	private PlayGrid grid;	
 	private Timer timer;
@@ -500,11 +507,11 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	public List<String> getLevelList() {
 		File f = new File(appPath + LEVEL_PATH);
-		System.out.println("load levels from: " + f.getAbsolutePath());
+		logger.log(Level.INFO, "load levels from: " + f.getAbsolutePath());
 		List<String> retVal = new ArrayList<String>();
 		
 		for (String s : f.list()) {
-			System.out.println("found level:" + s);
+			logger.log(Level.INFO, "found level:" + s);
 			if (s.endsWith(".lvl")) {
 				retVal.add(f.getPath() + "/" + s);
 			}

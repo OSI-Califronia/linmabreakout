@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.MENU_ITEM;
-import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
 
 public class TestExtras extends TestCase {
 
@@ -31,8 +30,6 @@ public class TestExtras extends TestCase {
 
 		// controller knows at least one type of brick
 		assertFalse(controller.getBrickClasses().isEmpty());
-
-
 	}
 
 
