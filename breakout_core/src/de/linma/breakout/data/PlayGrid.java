@@ -32,7 +32,7 @@ public class PlayGrid implements IPlayGrid {
 	 * Constructor
 	 */
 	@Inject
-	public PlayGrid(@PlaygridDimension int height, @PlaygridDimension int width) {
+	public PlayGrid(int height, int width) {
 		super();
 		
 		balls = new LinkedList<IBall>();		

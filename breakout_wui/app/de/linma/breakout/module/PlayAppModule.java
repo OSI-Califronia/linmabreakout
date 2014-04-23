@@ -1,7 +1,5 @@
 package de.linma.breakout.module;
 
-import play.api.Play;
-
 import com.google.inject.AbstractModule;
 
 import de.linma.breakout.controller.GameController;
@@ -17,19 +15,24 @@ import de.linma.breakout.view.wui.controllers.Application;
  *
  */
 public class PlayAppModule extends AbstractModule {
+	
+	/**
+	 * Constantes for default Gridsize
+	 */
+	private final static int GRID_DEF_HEIGHT = 500;
+	private final static int GRID_DEF_WIDTH = 500;
 
 	@Override
 	protected void configure() {
 		// playgrid
-		bind(IPlayGrid.class).to(PlayGrid.class);
+		bind(IPlayGrid.class).toInstance(new PlayGrid(GRID_DEF_HEIGHT, GRID_DEF_WIDTH));
 		
 		// gamecontroller
 		// check path for injection
 		String path = "";
-		if (Play.current().path().getAbsolutePath().startsWith("/app")) {
-			path = "/app/";	
-		}
-		
+//		if (Play.current().path().getAbsolutePath().startsWith("/app")) {
+//			path = "/app/";	
+//		}		
 		bind(IGameController.class).toInstance(new GameController(path));
 		
 		// Application Controller
