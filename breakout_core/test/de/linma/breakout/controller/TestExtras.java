@@ -7,17 +7,21 @@ import org.junit.Test;
 
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.data.IPlayGrid;
+import de.linma.breakout.data.PlayGrid;
 
 public class TestExtras extends TestCase {
+	
+	private IPlayGrid grid = new PlayGrid(500, 500);
 
-	private GameController controller;
+	private IGameController controller;
 
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("setUp()\n");
 
 		// create controller
-		controller = new GameController("test\\");
+		controller = new GameController(grid, "test\\");
 		controller.clearGrid();
 
 		controller.initialize();

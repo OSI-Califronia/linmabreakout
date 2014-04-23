@@ -10,6 +10,8 @@ import org.junit.Test;
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
+import de.linma.breakout.data.IPlayGrid;
+import de.linma.breakout.data.PlayGrid;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.impl.Ball;
 import de.linma.breakout.data.objects.impl.SimpleBrick;
@@ -18,6 +20,8 @@ import de.linma.breakout.view.tui.UITextView;
 
 public class TestGameController extends TestCase {
 
+	private IPlayGrid grid = new PlayGrid(500, 500);
+	
 	private UITextView view;
 	private GameController controller;
 
@@ -26,7 +30,7 @@ public class TestGameController extends TestCase {
 		System.out.println("setUp()\n");
 
 		// create controller
-		controller = new GameController("test\\");
+		controller = new GameController(grid, "test\\");
 		controller.clearGrid();
 		controller.setGridSize(400, 600);
 

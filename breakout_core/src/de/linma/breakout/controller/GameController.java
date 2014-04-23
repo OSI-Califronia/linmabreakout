@@ -81,9 +81,18 @@ public class GameController extends ObservableGame implements IGameController {
 	/**
 	 * Default Constructor
 	 */
-	public GameController(String appPath) {
-		super();		
+	public GameController(final String appPath) {
+		super();	
 		this.appPath = appPath;
+	}
+
+	
+	/**
+	 * Constructor with playgrid
+	 */
+	public GameController(final IPlayGrid grid, final String appPath) {
+		this(appPath);	
+		this.grid = grid;
 	}
 
 

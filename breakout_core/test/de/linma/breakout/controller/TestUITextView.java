@@ -6,10 +6,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.data.IPlayGrid;
+import de.linma.breakout.data.PlayGrid;
 import de.linma.breakout.view.tui.UITextView;
 
 public class TestUITextView extends TestCase {
 
+	private IPlayGrid grid = new PlayGrid(500, 500);
+	
 	private GameController controller;
 
 
@@ -18,10 +22,8 @@ public class TestUITextView extends TestCase {
 		System.out.println("setUp()\n");
 
 		// create controller
-		controller = new GameController("test\\");
+		controller = new GameController(grid, "test\\");
 		controller.clearGrid();
-
-
 
 		controller.initialize();
 	}

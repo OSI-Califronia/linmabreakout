@@ -137,7 +137,6 @@ public interface IGameController extends IObservableGame {
 	 */
 	void addBall(IBall ball);
 	
-	
 	/**
 	 * Change play grid size.
 	 */
