@@ -80,7 +80,7 @@ public class Application extends Controller  {
      * GET: /login 
      * Shows login page
      */
-	public static Result login() {
+	public Result login() {
 		// redirect to index if already logged in
 		if (!getActiveUser().equals("")) {
 			return redirect(routes.Application.socket_index());
@@ -93,7 +93,7 @@ public class Application extends Controller  {
 	 * GET:  /logout
 	 * Terminate a user session.
 	 */
-	public static Result logout() {
+	public Result logout() {
 		session().clear();
 		return redirect(routes.Application.login());
 	}
@@ -102,7 +102,7 @@ public class Application extends Controller  {
 	 * POST: /processLogin
 	 * Processes a forms login.
 	 */
-	public static Result processLogin() {
+	public Result processLogin() {
 		// get form data from request
 		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();		
 		User user = filledForm.get();
@@ -123,7 +123,7 @@ public class Application extends Controller  {
 	 * GET: /auth
 	 * Show login page for OpenID authentication
 	 */
-	public static Result openid_auth() {
+	public Result openid_auth() {
 		String providerUrl = "https://www.google.com/accounts/o8/id";
 		String returnToUrl = routes.Application.openid_verify().absoluteURL(request());
 		Map<String, String> attributes = new HashMap<String, String>();
@@ -154,7 +154,7 @@ public class Application extends Controller  {
 	 * Returns the Websocket-based main page layout of the game
 	 */
     @play.mvc.Security.Authenticated(Secured.class)
-    public static Result socket_index() {
+    public Result socket_index() {
     	return ok(de.linma.breakout.view.wui.views.html.socket_index.render());
     }
     
@@ -162,7 +162,7 @@ public class Application extends Controller  {
      * GET: /socket_connect
      * Initializes a new WebSocket connection to the running game
      */
-    public static WebSocket<String> socket_connect() {
+    public WebSocket<String> socket_connect() {
     	return new GameWebSocket(getGameController());
     }
     
@@ -174,7 +174,7 @@ public class Application extends Controller  {
 	 * Returns AJAX-based main page layout of the game
 	 */
 	@play.mvc.Security.Authenticated(Secured.class)
-    public static Result index() {		
+    public Result index() {		
     	return ok(de.linma.breakout.view.wui.views.html.index.render());
     }
     
@@ -183,7 +183,7 @@ public class Application extends Controller  {
      * GET: /playGrid
      * Returns content for #PlayGrid div  (game, level select or menu)
      */
-    public static Result playGrid() {
+    public Result playGrid() {
    	
     	if (getGameController().getState() == GAME_STATE.RUNNING) {   // render playgrid (game is running)
     		return ok(de.linma.breakout.view.wui.views.html.gamegrid.render(
@@ -204,7 +204,7 @@ public class Application extends Controller  {
     /**
      * Returns JSON-formatted level list.
      */
-    private static Result getLevels() {       	
+    private Result getLevels() {       	
     	Gson gson = new Gson();
     	System.out.println("call get LevelList");
     	List<String> levels = getGameController().getLevelList();
@@ -220,7 +220,7 @@ public class Application extends Controller  {
      * GET: /loadLevel?file=[FileName]
      * Loads the specified level file
      */
-    public static Result loadLevel(String file) {
+    public Result loadLevel(String file) {
     	getGameController().loadLevel(new File(file));
     	getGameController().processMenuInput(MENU_ITEM.MNU_CONTINUE);
     	return ok();
@@ -231,12 +231,11 @@ public class Application extends Controller  {
      * GET: /selectmenu?index=[MenuItemIndex]
      * Processes a click on a menu button from AJAX-based view
      */
-    public static Result selectmenu(String index) {
+    public Result selectmenu(String index) {
     	int itemIndex = Integer.valueOf(index);
-//    	
+    	
     	MENU_ITEM item = MENU_ITEM.values()[itemIndex];
-//    	return ok( item + " index: " + itemIndex);
-//    	
+   	
     	getGameController().processMenuInput(item);
     	
     	return index();
@@ -246,7 +245,7 @@ public class Application extends Controller  {
      * GET: /gameInput?key=[KeyCode]
      * Processes a key event on the play grid
      */
-    public static Result gameInput(String key) {
+    public Result gameInput(String key) {
     	if (key == null) {
     		return ok();
     	}
@@ -261,9 +260,5 @@ public class Application extends Controller  {
 			getGameController().processGameInput(IGameController.PLAYER_INPUT.LEFT);
 		}		
     	return ok();
-    }
-  
-    public static Result test() {
-    	return ok(Play.current().path().getAbsolutePath());
     }
 }
