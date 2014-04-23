@@ -6,14 +6,9 @@ GET     /                        @de.linma.breakout.view.wui.controllers.Applica
 GET		/login                   @de.linma.breakout.view.wui.controllers.Application.login()      
 POST    /login                   @de.linma.breakout.view.wui.controllers.Application.processLogin()
 GET		/logout					 @de.linma.breakout.view.wui.controllers.Application.logout()
-GET     /selectmenu              @de.linma.breakout.view.wui.controllers.Application.selectmenu(index)
-GET     /gameInput               @de.linma.breakout.view.wui.controllers.Application.gameInput(key)
-GET     /playGrid                @de.linma.breakout.view.wui.controllers.Application.playGrid()
-GET		/loadLevel				 @de.linma.breakout.view.wui.controllers.Application.loadLevel(file)
 
-# websocket routes
+#websocket routes
 GET		/socket_connect			 @de.linma.breakout.view.wui.controllers.Application.socket_connect()
-GET		/socket_index			 @de.linma.breakout.view.wui.controllers.Application.socket_index()
 
 #openId routes
 GET		/openid_auth			 @de.linma.breakout.view.wui.controllers.Application.openid_auth()

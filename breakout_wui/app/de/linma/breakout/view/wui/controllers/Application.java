@@ -29,40 +29,17 @@ import de.linma.breakout.data.user.User;
 public class Application extends Controller  {
     
 	@Inject
-	private static IGameController gameController;	  // static game instance
-	
+	private IGameController gameController;	  // game instance
+		
 	private static final String USER_NAME = "linma.webtech";
 	private static final String USER_PW = "900150983cd24fb0d6963f7d28e17f72";
 		
 	/**
 	 * Initializes the global game instance.
 	 */
-	private static IGameController getGameController() {
+	private IGameController getGameController() {
 		return gameController;
-	}
-	
-//	/**
-//	 * Initializes the global game instance.
-//	 */
-//	private static IGameController getGameController() {
-//		if (gameController == null) {
-//			if (Play.current().path().getAbsolutePath().startsWith("/app")) {
-//			
-//				gameController = new GameController("/app/");			
-//			} else {
-//				gameController = new GameController("");
-//			}
-//			
-//			// Open Swing GUI of game
-//			MainWindow mainWindow = new MainWindow(gameController);                
-//			gameController.addObserver(mainWindow.getBpaGameView2D());
-//			mainWindow.setVisible(true);
-//            
-//        	gameController.initialize();	
-//		}
-//		return gameController;
-//	}
-	
+	}	
 	
 	// ##########################  FORMS AUTHENTICATION HANDLERS ###########################
 	
@@ -83,7 +60,7 @@ public class Application extends Controller  {
 	public Result login() {
 		// redirect to index if already logged in
 		if (!getActiveUser().equals("")) {
-			return redirect(routes.Application.socket_index());
+			return redirect(routes.Application.index());
 		}
 		
 		return ok(de.linma.breakout.view.wui.views.html.login.render(""));
@@ -110,7 +87,7 @@ public class Application extends Controller  {
 		if (user.getUsername().equals(USER_NAME) && user.getPassword().equals(USER_PW)) {  // login is correct
 			session().clear();
             session("UserName", user.getUsername());            
-			return redirect(routes.Application.socket_index());
+			return redirect(routes.Application.index());
 		}
 		
 		return ok(de.linma.breakout.view.wui.views.html.login.render("Username or password are wrong."));
@@ -143,7 +120,7 @@ public class Application extends Controller  {
 		OpenID.UserInfo userInfo = userInfoPromise.get();
 		session().clear();
 		session("UserName", userInfo.attributes.get("Email"));
-		return redirect(routes.Application.socket_index());
+		return redirect(routes.Application.index());
 	}
 
 
@@ -154,8 +131,8 @@ public class Application extends Controller  {
 	 * Returns the Websocket-based main page layout of the game
 	 */
     @play.mvc.Security.Authenticated(Secured.class)
-    public Result socket_index() {
-    	return ok(de.linma.breakout.view.wui.views.html.socket_index.render());
+    public Result index() {
+    	return ok(de.linma.breakout.view.wui.views.html.index.render());
     }
     
     /**
@@ -167,98 +144,4 @@ public class Application extends Controller  {
     }
     
 
-	// ########################## ACTIONS FOR AJAX-POLLING VERSION  ###########################
-		
-	/**
-	 * GET: /index
-	 * Returns AJAX-based main page layout of the game
-	 */
-	@play.mvc.Security.Authenticated(Secured.class)
-    public Result index() {		
-    	return ok(de.linma.breakout.view.wui.views.html.index.render());
-    }
-    
-	
-    /** 
-     * GET: /playGrid
-     * Returns content for #PlayGrid div  (game, level select or menu)
-     */
-    public Result playGrid() {
-   	
-    	if (getGameController().getState() == GAME_STATE.RUNNING) {   // render playgrid (game is running)
-    		return ok(de.linma.breakout.view.wui.views.html.gamegrid.render(
-    				getGameController().getGridSize().width,
-    				getGameController().getGridSize().height,
-    				HtmlHelper.getBricks(gameController), HtmlHelper.getBalls(gameController)));
-    		
-    	} else if (getGameController().getState() == GAME_STATE.MENU_LEVEL_SEL) { // render level selection dialog
-    		return getLevels();
-    		
-    	} else {  // render menu items
-    		return ok(de.linma.breakout.view.wui.views.html.menu.render(HtmlHelper.getMenu(
-    				gameController.getGameMenu().getMenuItems(),
-    				gameController.getGameMenu().getTitle())));
-    	}
-    }
-   
-    /**
-     * Returns JSON-formatted level list.
-     */
-    private Result getLevels() {       	
-    	Gson gson = new Gson();
-    	System.out.println("call get LevelList");
-    	List<String> levels = getGameController().getLevelList();
-    	System.out.println("levels count: " + levels.size());
-    	
-    	
-    	String json = gson.toJson(levels);
-    	response().setContentType("Application.levellist");
- 		return ok(json); 
-    }
-    
-    /**
-     * GET: /loadLevel?file=[FileName]
-     * Loads the specified level file
-     */
-    public Result loadLevel(String file) {
-    	getGameController().loadLevel(new File(file));
-    	getGameController().processMenuInput(MENU_ITEM.MNU_CONTINUE);
-    	return ok();
-    }
-    
-    
-    /**
-     * GET: /selectmenu?index=[MenuItemIndex]
-     * Processes a click on a menu button from AJAX-based view
-     */
-    public Result selectmenu(String index) {
-    	int itemIndex = Integer.valueOf(index);
-    	
-    	MENU_ITEM item = MENU_ITEM.values()[itemIndex];
-   	
-    	getGameController().processMenuInput(item);
-    	
-    	return index();
-    }
-    
-    /**
-     * GET: /gameInput?key=[KeyCode]
-     * Processes a key event on the play grid
-     */
-    public Result gameInput(String key) {
-    	if (key == null) {
-    		return ok();
-    	}
-    	
-    	if (key.equals("escape")) {
-			getGameController().processGameInput(IGameController.PLAYER_INPUT.PAUSE);
-    	} else if (key.equals("right")) {
-			getGameController().processGameInput(IGameController.PLAYER_INPUT.RIGHT);
-			getGameController().processGameInput(IGameController.PLAYER_INPUT.RIGHT);
-		} else if (key.equals("left")) {
-			getGameController().processGameInput(IGameController.PLAYER_INPUT.LEFT);
-			getGameController().processGameInput(IGameController.PLAYER_INPUT.LEFT);
-		}		
-    	return ok();
-    }
 }

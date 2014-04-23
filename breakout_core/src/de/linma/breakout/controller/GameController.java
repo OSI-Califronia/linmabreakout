@@ -135,8 +135,6 @@ public class GameController extends ObservableGame implements IGameController {
 		
 		notifyNextGameFrame();
 		notifyRepaintPlayGrid();
-		
-		
 	}
 	
 	/**
@@ -536,10 +534,6 @@ public class GameController extends ObservableGame implements IGameController {
 
 	private IPlayGrid getGrid() {
 		return grid;
-//		if (grid == null) {
-//			grid = new PlayGrid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
-//		}
-//		return grid;
 	}
 
 	/**

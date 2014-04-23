@@ -54,8 +54,6 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 	 * Sends menu items to client (JSON-formatted)
 	 */
 	public void updateGameMenu(MENU_ITEM[] menuItems, String title) {	
-		System.out.println("updateGameMenu");
-	
 		out.write("MENU:" + gson.toJson(HtmlHelper.getMenu(menuItems, title)));
 	}
 

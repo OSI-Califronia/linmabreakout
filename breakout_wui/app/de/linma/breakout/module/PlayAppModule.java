@@ -36,7 +36,7 @@ public class PlayAppModule extends AbstractModule {
 		bind(IGameController.class).toInstance(new GameController(path));
 		
 		// Application Controller
-		bind(Application.class).to(Application.class);
+		bind(Application.class).toInstance(new Application());
 	}
 
 }

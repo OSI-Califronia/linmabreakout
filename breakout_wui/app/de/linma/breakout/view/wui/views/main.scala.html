@@ -15,16 +15,6 @@
 	<link rel="icon" href="@routes.Assets.at("images/favicon.jpg")" type="image/jpeg">
 </head>
 <body>
-	<div class="btn-group">
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    	Connection Mode <span class="caret"></span>
-  	</button>
-		<ul class="dropdown-menu" role="menu">
-	    	<li><a href="@de.linma.breakout.view.wui.controllers.routes.Application.index()">AJAX-Polling</a></li>
-	    	<li><a href="@de.linma.breakout.view.wui.controllers.routes.Application.socket_index()">WebSockets</a></li>
-	  	</ul>
-  	</div>
-	
 	<center><img src="@routes.Assets.at("images/breakout_logo.png")" /></center><br />
 
 	@content
