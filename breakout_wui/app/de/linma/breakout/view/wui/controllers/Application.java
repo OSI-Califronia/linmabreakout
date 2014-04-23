@@ -28,41 +28,40 @@ import de.linma.breakout.data.user.User;
  */
 public class Application extends Controller  {
     
-	private IGameController gameController;	  // static game instance
+	@Inject
+	private static IGameController gameController;	  // static game instance
 	
 	private static final String USER_NAME = "linma.webtech";
 	private static final String USER_PW = "900150983cd24fb0d6963f7d28e17f72";
-	
-	/**
-	 * Default Constructor
-	 */
-	@Inject
-	public Application(IGameController gameController) {
-		super();
-		this.gameController = gameController;
-	}
-	
+		
 	/**
 	 * Initializes the global game instance.
 	 */
 	private static IGameController getGameController() {
-		if (gameController == null) {
-			if (Play.current().path().getAbsolutePath().startsWith("/app")) {
-			
-				gameController = new GameController("/app/");			
-			} else {
-				gameController = new GameController("");
-			}
-			
-			// Open Swing GUI of game
+		return gameController;
+	}
+	
+//	/**
+//	 * Initializes the global game instance.
+//	 */
+//	private static IGameController getGameController() {
+//		if (gameController == null) {
+//			if (Play.current().path().getAbsolutePath().startsWith("/app")) {
+//			
+//				gameController = new GameController("/app/");			
+//			} else {
+//				gameController = new GameController("");
+//			}
+//			
+//			// Open Swing GUI of game
 //			MainWindow mainWindow = new MainWindow(gameController);                
 //			gameController.addObserver(mainWindow.getBpaGameView2D());
 //			mainWindow.setVisible(true);
-            
-        	gameController.initialize();	
-		}
-		return gameController;
-	}
+//            
+//        	gameController.initialize();	
+//		}
+//		return gameController;
+//	}
 	
 	
 	// ##########################  FORMS AUTHENTICATION HANDLERS ###########################

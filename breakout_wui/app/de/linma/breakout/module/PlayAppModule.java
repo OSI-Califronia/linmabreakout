@@ -8,6 +8,7 @@ import de.linma.breakout.controller.GameController;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.view.wui.controllers.Application;
 
 /**
  * Module for play Application
@@ -29,9 +30,10 @@ public class PlayAppModule extends AbstractModule {
 			path = "/app/";	
 		}
 		
-		bind(IGameController.class).to(new GameController(path).class);
+		bind(IGameController.class).toInstance(new GameController(path));
 		
-		
+		// Application Controller
+		bind(Application.class).to(Application.class);
 	}
 
 }
