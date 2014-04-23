@@ -1,5 +1,7 @@
 package de.linma.breakout.module;
 
+import org.apache.log4j.Logger;
+
 import com.google.inject.AbstractModule;
 
 import de.linma.breakout.controller.GameController;
@@ -37,6 +39,9 @@ public class PlayAppModule extends AbstractModule {
 		
 		// Application Controller
 		bind(Application.class).toInstance(new Application());
+		
+		// Logger
+		bind(Logger.class).toInstance(Logger.getLogger("Breakout"));
 	}
 
 }

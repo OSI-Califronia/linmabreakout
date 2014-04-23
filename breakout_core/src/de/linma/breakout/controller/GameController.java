@@ -58,7 +58,8 @@ public class GameController extends ObservableGame implements IGameController {
 		}		
 	}	
 
-	private Logger logger = Logger.getLogger(GameController.class);
+	@Inject
+	private Logger logger;
 		
 	@Inject
 	private IPlayGrid grid;	
@@ -497,7 +498,8 @@ public class GameController extends ObservableGame implements IGameController {
 			setGridSize(getGrid().getWidth(), getGrid().getHeight());
 			notifyOnResize();			
 			
-		} catch(Exception e) {			
+		} catch(Exception e) {	
+			logger.log(Level.ERROR, "Could not load Level", e);
 			return false;
 		} finally {
 			// in case of exception
