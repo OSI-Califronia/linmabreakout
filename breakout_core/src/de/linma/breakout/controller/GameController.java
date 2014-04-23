@@ -25,7 +25,6 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.ObservableGame;
 import de.linma.breakout.communication.TextMapping;
 import de.linma.breakout.data.IPlayGrid;
-import de.linma.breakout.data.PlayGrid;
 import de.linma.breakout.data.menu.GameMenu;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
@@ -536,11 +535,11 @@ public class GameController extends ObservableGame implements IGameController {
 	/* ############################   the same procedure as every year...    ###########################  */
 
 	private IPlayGrid getGrid() {
-//		return grid;
-		if (grid == null) {
-			grid = new PlayGrid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
-		}
 		return grid;
+//		if (grid == null) {
+//			grid = new PlayGrid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
+//		}
+//		return grid;
 	}
 
 	/**
