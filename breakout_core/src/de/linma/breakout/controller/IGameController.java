@@ -152,9 +152,5 @@ public interface IGameController extends IObservableGame {
 	 * Deletes all Objects on Grid.
 	 */
 	void clearGrid();
-	
-	
-	
-	
-	
+
 }

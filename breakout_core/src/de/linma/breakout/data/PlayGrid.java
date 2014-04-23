@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
-import de.linma.breakout.data.objects.IDecodable;
 import de.linma.breakout.data.objects.impl.MovingBrick;
 import de.linma.breakout.data.objects.impl.SimpleBrick;
 
@@ -18,7 +19,7 @@ import de.linma.breakout.data.objects.impl.SimpleBrick;
  *   - bricks
  *   - slider
  */
-public class PlayGrid implements IDecodable {
+public class PlayGrid implements IPlayGrid {
 	
 	private int height;
 	private int width;
@@ -30,7 +31,8 @@ public class PlayGrid implements IDecodable {
 	/**
 	 * Constructor
 	 */
-	public PlayGrid(int height, int width) {
+	@Inject
+	public PlayGrid(@PlaygridDimension int height, @PlaygridDimension int width) {
 		super();
 		
 		balls = new LinkedList<IBall>();		
@@ -110,8 +112,6 @@ public class PlayGrid implements IDecodable {
 		sb.append(this.getWidth());	
 		return sb.toString();
 	}
-	
-	
 
 	/**
 	 * Return a list of Instances of all available bricks.

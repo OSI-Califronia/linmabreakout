@@ -15,27 +15,32 @@ import play.mvc.Result;
 import play.mvc.WebSocket;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.GameController;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.User;
-import de.linma.breakout.view.wui.controllers.routes;
 
 /**
  * Main controller of Play application 
  */
 public class Application extends Controller  {
     
-	private static IGameController gameController;	  // static game instance
+	private IGameController gameController;	  // static game instance
+	
 	private static final String USER_NAME = "linma.webtech";
 	private static final String USER_PW = "900150983cd24fb0d6963f7d28e17f72";
 	
-	static {
-		getGameController();
+	/**
+	 * Default Constructor
+	 */
+	@Inject
+	public Application(IGameController gameController) {
+		super();
+		this.gameController = gameController;
 	}
-	
 	
 	/**
 	 * Initializes the global game instance.
@@ -43,6 +48,7 @@ public class Application extends Controller  {
 	private static IGameController getGameController() {
 		if (gameController == null) {
 			if (Play.current().path().getAbsolutePath().startsWith("/app")) {
+			
 				gameController = new GameController("/app/");			
 			} else {
 				gameController = new GameController("");
