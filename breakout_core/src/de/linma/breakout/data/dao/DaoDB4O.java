@@ -21,8 +21,7 @@ public class DaoDB4O implements IDao {
 	}
 
 	public List<User> getAllUsers() {
-		List<User> allUsers = db.query(User.class);
-		return allUsers;
+		return db.query(User.class);
 	}
 
 	public User getUser(final String username, final String password) {
@@ -73,8 +72,7 @@ public class DaoDB4O implements IDao {
 	}
 
 	public void close() {
-		while (!db.close()) {
-		}
+		db.close();
 	}
 
 	private User getUser(final String username) {
@@ -87,11 +85,7 @@ public class DaoDB4O implements IDao {
 
 			@Override
 			public boolean match(User user) {
-				if (user.getUsername().equals(username)) {
-					return true;
-				} else {
-					return false;
-				}
+				return user.getUsername().equals(username);
 			}
 
 		});
