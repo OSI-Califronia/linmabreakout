@@ -65,6 +65,8 @@ public class TestExtras extends TestCase {
 		System.out.println("tearDown()\n");
 
 		controller.processMenuInput(MENU_ITEM.MNU_END);
+		System.out.println("close Databases");
+		controller.close();
 		controller = null;	
 	}
 

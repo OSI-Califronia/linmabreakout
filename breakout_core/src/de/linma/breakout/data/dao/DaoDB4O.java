@@ -35,9 +35,10 @@ public class DaoDB4O implements IDao {
 
 			@Override
 			public boolean match(User user) {
-				if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+				if (user.getUsername().equals(username)
+						&& user.getPassword().equals(password)) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
 			}
@@ -57,7 +58,7 @@ public class DaoDB4O implements IDao {
 
 	public User createUser(String username, String password) {
 		User existingUser = getUser(username);
-		if(existingUser != null){
+		if (existingUser != null) {
 			return null;
 		}
 		User newUser = new User(username, password);
@@ -65,18 +66,18 @@ public class DaoDB4O implements IDao {
 		db.commit();
 		return newUser;
 	}
-	
+
 	public void updateUser(User user) {
 		db.store(user);
 		db.commit();
 	}
 
 	public void close() {
-		db.commit();
-		db.close();
+		while (!db.close()) {
+		}
 	}
-	
-	private User getUser(final String username){
+
+	private User getUser(final String username) {
 		List<User> user = db.query(new Predicate<User>() {
 
 			/**
@@ -86,9 +87,9 @@ public class DaoDB4O implements IDao {
 
 			@Override
 			public boolean match(User user) {
-				if(user.getUsername().equals(username)){
+				if (user.getUsername().equals(username)) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
 			}

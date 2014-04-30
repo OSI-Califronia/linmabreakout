@@ -340,6 +340,7 @@ public class TestGameController extends TestCase {
 //		controller.terminate();		
 		controller.removeObserver(view);
 		controller.processMenuInput(MENU_ITEM.MNU_END);
+		controller.close();
 		controller = null;	
 	}
 

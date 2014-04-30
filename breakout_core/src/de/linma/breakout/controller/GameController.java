@@ -538,7 +538,7 @@ public class GameController extends ObservableGame implements IGameController {
 			notifyOnResize();
 
 		} catch (Exception e) {
-			logger.log(Level.ERROR, "Could not load Level", e);
+//			logger.log(Level.ERROR, "Could not load Level", e);
 			return false;
 		} finally {
 			// in case of exception
@@ -558,11 +558,11 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	public List<String> getLevelList() {
 		File f = new File(appPath + LEVEL_PATH);
-		logger.log(Level.INFO, "load levels from: " + f.getAbsolutePath());
+//		logger.log(Level.INFO, "load levels from: " + f.getAbsolutePath());
 		List<String> retVal = new ArrayList<String>();
 
 		for (String s : f.list()) {
-			logger.log(Level.INFO, "found level:" + s);
+//			logger.log(Level.INFO, "found level:" + s);
 			if (s.endsWith(".lvl")) {
 				retVal.add(f.getPath() + "/" + s);
 			}
@@ -706,6 +706,10 @@ public class GameController extends ObservableGame implements IGameController {
 
 	public User checkUser(String username, String password) {
 		return dao.getUser(username, password);
+	}
+	
+	public void close(){
+		dao.close();
 	}
 
 }

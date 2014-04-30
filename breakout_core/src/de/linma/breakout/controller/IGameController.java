@@ -173,5 +173,7 @@ public interface IGameController extends IObservableGame {
 	User checkUser(String username, String password);
 	
 	void updateUser(User user);
+	
+	void close();
 
 }

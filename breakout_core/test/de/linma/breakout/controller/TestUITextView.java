@@ -45,6 +45,7 @@ public class TestUITextView extends TestCase {
 		System.out.println("tearDown()\n");
 
 		controller.processMenuInput(MENU_ITEM.MNU_END);
+		controller.close();
 		controller = null;	
 	}
 
