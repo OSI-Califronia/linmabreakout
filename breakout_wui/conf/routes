@@ -3,8 +3,10 @@
 # ~~~~
 
 GET     /                        @de.linma.breakout.view.wui.controllers.Application.index()
-GET		/login                   @de.linma.breakout.view.wui.controllers.Application.login()      
+GET		/login                   @de.linma.breakout.view.wui.controllers.Application.login()    
 POST    /login                   @de.linma.breakout.view.wui.controllers.Application.processLogin()
+GET		/register                @de.linma.breakout.view.wui.controllers.Application.register()
+POST	/register                @de.linma.breakout.view.wui.controllers.Application.processRegistration()
 GET		/logout					 @de.linma.breakout.view.wui.controllers.Application.logout()
 
 #websocket routes

@@ -24,96 +24,123 @@ import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.User;
 
 /**
- * Main controller of Play application 
+ * Main controller of Play application
  */
-public class Application extends Controller  {
-    
+public class Application extends Controller {
+
 	@Inject
-	private IGameController gameController;	  // game instance
-		
+	private IGameController gameController; // game instance
+
 	private static final String USER_NAME = "linma.webtech";
 	private static final String USER_PW = "900150983cd24fb0d6963f7d28e17f72";
-		
+
 	/**
 	 * Initializes the global game instance.
 	 */
 	private IGameController getGameController() {
 		return gameController;
-	}	
-	
-	// ##########################  FORMS AUTHENTICATION HANDLERS ###########################
-	
+	}
+
+	// ########################## FORMS AUTHENTICATION HANDLERS
+	// ###########################
+
 	/**
 	 * Returns name/email of logged in user or empty string.
 	 */
-    public static String getActiveUser() {
-        if(session("UserName") != null && !session("UserName").equals("")) {
-          return session("UserName");
-        }
-        return "";
-    }
-	
-    /**
-     * GET: /login 
-     * Shows login page
-     */
+	public static String getActiveUser() {
+		if (session("UserName") != null && !session("UserName").equals("")) {
+			return session("UserName");
+		}
+		return "";
+	}
+
+	/**
+	 * GET: /login Shows login page
+	 */
 	public Result login() {
 		// redirect to index if already logged in
 		if (!getActiveUser().equals("")) {
 			return redirect(routes.Application.index());
 		}
-		
+
 		return ok(de.linma.breakout.view.wui.views.html.login.render(""));
 	}
-	
+
 	/**
-	 * GET:  /logout
-	 * Terminate a user session.
+	 * GET: /register Shows register page
+	 */
+	public Result register() {
+		return ok(de.linma.breakout.view.wui.views.html.register.render(""));
+	}
+
+	/**
+	 * GET: /logout Terminate a user session.
 	 */
 	public Result logout() {
 		session().clear();
 		return redirect(routes.Application.login());
 	}
-	
+
 	/**
-	 * POST: /processLogin
-	 * Processes a forms login.
+	 * POST: /processLogin Processes a forms login.
 	 */
 	public Result processLogin() {
 		// get form data from request
-		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();		
-		User user = filledForm.get();
+		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
+		User userLogin = filledForm.get();
+		User userDB = gameController.checkUser(userLogin.getUsername(),
+				userLogin.getPassword());
 
-		if (user.getUsername().equals(USER_NAME) && user.getPassword().equals(USER_PW)) {  // login is correct
+		if (userDB != null) { // login is correct
 			session().clear();
-            session("UserName", user.getUsername());            
+			session("UserName", userDB.getUsername());
 			return redirect(routes.Application.index());
 		}
-		
-		return ok(de.linma.breakout.view.wui.views.html.login.render("Username or password are wrong."));
+
+		return ok(de.linma.breakout.view.wui.views.html.login
+				.render("Username or password are wrong."));
 	}
-	
-	
-	// ####################  HANDLERS FOR OPEN ID AUTHENTICATION ##################
 
 	/**
-	 * GET: /auth
-	 * Show login page for OpenID authentication
+	 * POST: /processRegistration Processes a forms registration.
+	 */
+	public Result processRegistration() {
+		// get form data from request
+		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
+		User userLogin = filledForm.get();
+		User userDB = gameController.createUser(userLogin.getUsername(),
+				userLogin.getPassword());
+		if (userDB != null) {
+			session().clear();
+			session("UserName", userDB.getUsername());
+			return redirect(routes.Application.index());
+		}
+		return ok(de.linma.breakout.view.wui.views.html.register
+				.render("Username already exists."));
+	}
+
+	// #################### HANDLERS FOR OPEN ID AUTHENTICATION
+	// ##################
+
+	/**
+	 * GET: /auth Show login page for OpenID authentication
 	 */
 	public Result openid_auth() {
 		String providerUrl = "https://www.google.com/accounts/o8/id";
-		String returnToUrl = routes.Application.openid_verify().absoluteURL(request());
+		String returnToUrl = routes.Application.openid_verify().absoluteURL(
+				request());
 		Map<String, String> attributes = new HashMap<String, String>();
 		attributes.put("Email", "http://schema.openid.net/contact/email");
-		attributes.put("FirstName", "http://schema.openid.net/namePerson/first");
+		attributes
+				.put("FirstName", "http://schema.openid.net/namePerson/first");
 		attributes.put("LastName", "http://schema.openid.net/namePerson/last");
-		F.Promise<String> redirectUrl = OpenID.redirectURL(providerUrl, returnToUrl, attributes);
+		F.Promise<String> redirectUrl = OpenID.redirectURL(providerUrl,
+				returnToUrl, attributes);
 		return redirect(redirectUrl.get());
 	}
-	
+
 	/**
-	 * GET: /verify
-	 * Callback action for OpenID provider
+	 * GET: /verify Callback action for OpenID provider
 	 */
 	public Result openid_verify() {
 		F.Promise<OpenID.UserInfo> userInfoPromise = OpenID.verifiedId();
@@ -123,25 +150,24 @@ public class Application extends Controller  {
 		return redirect(routes.Application.index());
 	}
 
-
-	// #################### ACTIONS FOR WEBSOCKET VERSION ##########################
+	// #################### ACTIONS FOR WEBSOCKET VERSION
+	// ##########################
 
 	/**
-	 * GET: /socket_index
-	 * Returns the Websocket-based main page layout of the game
+	 * GET: /socket_index Returns the Websocket-based main page layout of the
+	 * game
 	 */
-    @play.mvc.Security.Authenticated(Secured.class)
-    public Result index() {
-    	return ok(de.linma.breakout.view.wui.views.html.index.render());
-    }
-    
-    /**
-     * GET: /socket_connect
-     * Initializes a new WebSocket connection to the running game
-     */
-    public WebSocket<String> socket_connect() {
-    	return new GameWebSocket(getGameController());
-    }
-    
+	@play.mvc.Security.Authenticated(Secured.class)
+	public Result index() {
+		return ok(de.linma.breakout.view.wui.views.html.index.render());
+	}
+
+	/**
+	 * GET: /socket_connect Initializes a new WebSocket connection to the
+	 * running game
+	 */
+	public WebSocket<String> socket_connect() {
+		return new GameWebSocket(getGameController());
+	}
 
 }
