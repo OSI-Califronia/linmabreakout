@@ -10,6 +10,7 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.data.menu.GameMenu;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
+import de.linma.breakout.data.user.IUser;
 import de.linma.breakout.data.user.User;
 
 /**
@@ -167,12 +168,18 @@ public interface IGameController extends IObservableGame {
 	 * Deletes all Objects on Grid.
 	 */
 	void clearGrid();
-
-	User createUser(String username, String password);
 	
-	User checkUser(String username, String password);
+	/**
+	 * Stores a given User in a Database. If a user with the given username
+	 * exists, this null will be returned.
+	 * 
+	 * @return Created User
+	 */
+	IUser createUser(final String username, final String password);
 	
-	void updateUser(User user);
+	IUser checkUser(final String username, final String password);
+	
+	boolean updateUser(final User user);
 	
 	void close();
 

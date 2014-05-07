@@ -16,11 +16,11 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
-import de.linma.breakout.data.dao.IDao;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.impl.Ball;
 import de.linma.breakout.data.objects.impl.SimpleBrick;
 import de.linma.breakout.data.objects.impl.Slider;
+import de.linma.breakout.data.user.dao.IUserDao;
 import de.linma.breakout.view.tui.UITextView;
 
 public class TestGameController extends TestCase {
@@ -29,7 +29,7 @@ public class TestGameController extends TestCase {
 	private Logger logger;
 	
 	@Mock
-	private IDao dummyDao;
+	private IUserDao dummyDao;
 	
 	private IPlayGrid grid = new PlayGrid(500, 500);
 	

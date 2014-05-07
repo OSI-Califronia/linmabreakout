@@ -25,13 +25,14 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.ObservableGame;
 import de.linma.breakout.communication.TextMapping;
 import de.linma.breakout.data.IPlayGrid;
-import de.linma.breakout.data.dao.IDao;
 import de.linma.breakout.data.menu.GameMenu;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
 import de.linma.breakout.data.objects.IDecodable;
 import de.linma.breakout.data.objects.impl.Slider;
+import de.linma.breakout.data.user.IUser;
 import de.linma.breakout.data.user.User;
+import de.linma.breakout.data.user.dao.IUserDao;
 
 /**
  * Game Controller
@@ -69,7 +70,7 @@ public class GameController extends ObservableGame implements IGameController {
 	private IPlayGrid grid;
 
 	@Inject
-	private IDao dao;
+	private IUserDao dao;
 
 	private String appPath; // base directory of application
 	private Timer timer;
@@ -706,7 +707,12 @@ public class GameController extends ObservableGame implements IGameController {
 	 * (non-Javadoc)
 	 * @see de.linma.breakout.controller.IGameController#createUser(java.lang.String, java.lang.String)
 	 */
-	public User createUser(String username, String password) {
+	public IUser createUser(final String username, final String password) {
+		IUser existingUser = dao.getUser(username);
+		if (existingUser != null) {
+			return null;
+		}		
+	
 		return dao.createUser(username, password);
 	}
 	
@@ -714,16 +720,32 @@ public class GameController extends ObservableGame implements IGameController {
 	 * (non-Javadoc)
 	 * @see de.linma.breakout.controller.IGameController#updateUser(de.linma.breakout.data.user.User)
 	 */
-	public void updateUser(User user){
+	public boolean updateUser(final User user){
+		// check input
+		if (user == null) {
+			return false;
+		}
+		
+		// check if user exists
+		if (dao.getUser(user.getUsername()) == null) {
+			return false;
+		}
+		
 		dao.updateUser(user);
+		
+		return true;
 	}
 
 	/**
 	 * (non-Javadoc)
 	 * @see de.linma.breakout.controller.IGameController#checkUser(java.lang.String, java.lang.String)
 	 */
-	public User checkUser(String username, String password) {
-		return dao.getUser(username, password);
+	public IUser checkUser(final String username, final String password) {
+		IUser user = dao.getUser(username);
+		if (user != null && password != null && user.getUsername().equals(password)) {
+			return user;
+		}
+		return null;
 	}
 	
 	/**

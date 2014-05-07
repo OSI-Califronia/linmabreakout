@@ -1,26 +1,33 @@
 package de.linma.breakout.data.user;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import java.io.Serializable;
+
+import lombok.NoArgsConstructor;
 
 
-public class User{
+/**
+ * 
+ * @author MBausch
+ *
+ */
+@NoArgsConstructor
+public class User implements IUser, Serializable {
 
-	private String username;
-	private String rev;
+	private static final long serialVersionUID = 2006900087503758999L;
+	
+	private String username;	
 	private String password;
 
-	public User() {
-		super();
+	public User(IUser user) {
+		this(user.getUsername(), user.getPassword());
 	}
-
-	public User(String username, String password) {
+	
+	public User(final String username, final String password) {
 		super();
 		this.username = username;
-		this.password = password;
-		this.rev = null;
+		this.password = password;	
 	}
 
-	@JsonProperty("_id")
 	public String getUsername() {
 		if (username == null) {
 			return "";
@@ -34,16 +41,15 @@ public class User{
 		}
 		return password;
 	}
-
-	@JsonProperty("_id")
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -86,15 +92,4 @@ public class User{
 			return false;
 		return true;
 	}
-
-	@JsonProperty("_rev")
-	public String getRev() {
-		return rev;
-	}
-	
-	@JsonProperty("_rev")
-	public void setRev(String rev) {
-		this.rev = rev;
-	}
-
 }

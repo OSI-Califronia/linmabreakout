@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
-import de.linma.breakout.data.dao.IDao;
+import de.linma.breakout.data.user.dao.IUserDao;
 import de.linma.breakout.view.tui.UITextView;
 
 public class TestUITextView extends TestCase {
@@ -21,7 +21,7 @@ public class TestUITextView extends TestCase {
 	private Logger logger;
 	
 	@Mock
-	private IDao dummyDao;
+	private IUserDao dummyDao;
 
 	private IPlayGrid grid = new PlayGrid(500, 500);
 	

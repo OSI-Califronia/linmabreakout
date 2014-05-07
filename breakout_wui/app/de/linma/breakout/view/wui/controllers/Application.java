@@ -3,6 +3,9 @@ package de.linma.breakout.view.wui.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -16,35 +19,23 @@ import play.mvc.WebSocket;
 
 import com.google.inject.Inject;
 
-import de.linma.breakout.AppGlobal;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.User;
 
 /**
  * Main controller of Play application
  */
+@NoArgsConstructor
 public class Application extends Controller {
 	
 	@Inject
 	private Logger logger;
 
 	@Inject
+	@Getter
 	private IGameController gameController; // game instance
-
-	/**
-	 * Default Constructor
-	 */
-	public Application() {
-		super();
-	}
 	
-	/**
-	 * Initializes the global game instance.
-	 */
-	private IGameController getGameController() {
-		return gameController;
-	}
-
+	
 	// ########################## FORMS AUTHENTICATION HANDLERS ###########################
 
 	/**
@@ -101,8 +92,7 @@ public class Application extends Controller {
 			return redirect(routes.Application.index());
 		}
 
-		return ok(de.linma.breakout.view.wui.views.html.login
-				.render("Username or password are wrong."));
+		return ok(de.linma.breakout.view.wui.views.html.login.render("Username or password are wrong."));
 	}
 
 	/**
