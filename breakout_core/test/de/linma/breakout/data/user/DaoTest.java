@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.linma.breakout.data.dao.DaoCouchDB;
 import de.linma.breakout.data.dao.DaoDB4O;
 import de.linma.breakout.data.dao.IDao;
 import junit.framework.TestCase;
@@ -12,10 +13,12 @@ import junit.framework.TestCase;
 public class DaoTest extends TestCase {
 
 	IDao db4o;
+	IDao couchDb;
 
 	@Before
 	protected void setUp() {
 		db4o = new DaoDB4O("db40_junit.db");
+		couchDb = new DaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout_test");
 	}
 
 	@Test
@@ -64,6 +67,26 @@ public class DaoTest extends TestCase {
 		
 		List<User> allUsersEmpty = db4o.getAllUsers();
 		assertEquals(0, allUsersEmpty.size());
+	}
+	
+	@Test
+	public void testCouchDB(){
+		User userFirst = couchDb.createUser("Name1", "pass1");
+		User userSecond = couchDb.createUser("Name2", "pass2");
+		User userThird = couchDb.createUser("Name3", "pass3");
+		
+		User userDbFirst = couchDb.getUser("Name1", "pass1");
+		assertEquals(userFirst, userDbFirst);
+		
+		User userDbSecond = couchDb.getUser("Name2", "pass2");
+		assertEquals(userSecond, userDbSecond);
+		
+		User userDbThird = couchDb.getUser("Name3", "pass3");
+		assertEquals(userThird, userDbThird);
+		
+		couchDb.deleteUser(userFirst);
+		couchDb.deleteUser(userSecond);
+		couchDb.deleteUser(userThird);
 	}
 	
 	@Override
