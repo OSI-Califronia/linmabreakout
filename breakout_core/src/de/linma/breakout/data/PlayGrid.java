@@ -29,6 +29,14 @@ public class PlayGrid implements IPlayGrid {
 	private IBrick slider;
 	
 	/**
+	 * Default Constructor
+	 * DO NOT USE
+	 */
+	public PlayGrid() {
+		super();
+	}
+	
+	/**
 	 * Constructor
 	 */
 	@Inject
@@ -173,8 +181,4 @@ public class PlayGrid implements IPlayGrid {
 	public void setSlider(IBrick slider) {
 		this.slider = slider;
 	}
-
-	
-	
-	
 }

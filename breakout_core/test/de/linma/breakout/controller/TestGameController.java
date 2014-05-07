@@ -4,14 +4,19 @@ import java.io.File;
 
 import junit.framework.TestCase;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.dao.IDao;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.impl.Ball;
 import de.linma.breakout.data.objects.impl.SimpleBrick;
@@ -19,21 +24,29 @@ import de.linma.breakout.data.objects.impl.Slider;
 import de.linma.breakout.view.tui.UITextView;
 
 public class TestGameController extends TestCase {
-
+	
+	@Mock
+	private Logger logger;
+	
+	@Mock
+	private IDao dummyDao;
+	
 	private IPlayGrid grid = new PlayGrid(500, 500);
 	
 	private UITextView view;
-	private GameController controller;
+	
+	@InjectMocks
+	private GameController controller = new GameController(grid, "test\\");
 
 	@Before
 	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		
 		System.out.println("setUp()\n");
 
-		// create controller
-		controller = new GameController(grid, "test\\");
+		// create controller			
 		controller.clearGrid();
 		controller.setGridSize(400, 600);
-
 
 		// create view
 		view = new UITextView();
@@ -341,7 +354,6 @@ public class TestGameController extends TestCase {
 		controller.removeObserver(view);
 		controller.processMenuInput(MENU_ITEM.MNU_END);
 		controller.close();
-		controller = null;	
 	}
 
 }

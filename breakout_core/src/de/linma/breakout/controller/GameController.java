@@ -25,7 +25,6 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.ObservableGame;
 import de.linma.breakout.communication.TextMapping;
 import de.linma.breakout.data.IPlayGrid;
-import de.linma.breakout.data.dao.DaoDB4O;
 import de.linma.breakout.data.dao.IDao;
 import de.linma.breakout.data.menu.GameMenu;
 import de.linma.breakout.data.objects.IBall;
@@ -69,6 +68,7 @@ public class GameController extends ObservableGame implements IGameController {
 	@Inject
 	private IPlayGrid grid;
 
+	@Inject
 	private IDao dao;
 
 	private String appPath; // base directory of application
@@ -86,11 +86,19 @@ public class GameController extends ObservableGame implements IGameController {
 	private static final int DEFAULT_SLIDER_STEP = 5;
 
 	/**
-	 * Default Constructor
+	 * Default constructor
+	 * DO NOT USE
+	 */
+	public GameController() {
+		super();
+	}
+	
+	/**
+	 * Default Constructor with path
+	 * @param appPath
 	 */
 	public GameController(final String appPath) {
-		super();
-		dao = new DaoDB4O("breakout.db40");
+		super();		
 		this.appPath = appPath;
 	}
 
@@ -103,12 +111,10 @@ public class GameController extends ObservableGame implements IGameController {
 	}
 
 	/*
-	 * ####################################### GAME INFRASTRUCTURE
-	 * #######################################
+	 * ####################################### GAME INFRASTRUCTURE #######################################
 	 */
 	/*
-	 * ############################### Basics to make the game a game
-	 * ##############################
+	 * ############################### Basics to make the game a game ##############################
 	 */
 
 	/**
@@ -442,7 +448,7 @@ public class GameController extends ObservableGame implements IGameController {
 	 * @see de.linma.breakout.controller.IGameController#saveLevel()
 	 */
 	public String saveLevel() {
-		String filepath = LEVEL_PATH + "userLevel" + System.nanoTime() + ".lvl";
+		String filepath = appPath + LEVEL_PATH + "userLevel" + System.nanoTime() + ".lvl";
 		if (saveLevel(new File(filepath))) {
 			return filepath;
 		} else {
@@ -538,7 +544,7 @@ public class GameController extends ObservableGame implements IGameController {
 			notifyOnResize();
 
 		} catch (Exception e) {
-//			logger.log(Level.ERROR, "Could not load Level", e);
+			logger.log(Level.ERROR, "Could not load Level", e);
 			return false;
 		} finally {
 			// in case of exception
@@ -558,11 +564,11 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	public List<String> getLevelList() {
 		File f = new File(appPath + LEVEL_PATH);
-//		logger.log(Level.INFO, "load levels from: " + f.getAbsolutePath());
+		logger.log(Level.INFO, "load levels from: " + f.getAbsolutePath());
 		List<String> retVal = new ArrayList<String>();
 
 		for (String s : f.list()) {
-//			logger.log(Level.INFO, "found level:" + s);
+			logger.log(Level.INFO, "found level:" + s);
 			if (s.endsWith(".lvl")) {
 				retVal.add(f.getPath() + "/" + s);
 			}
@@ -571,12 +577,10 @@ public class GameController extends ObservableGame implements IGameController {
 	}
 
 	/*
-	 * ####################################### GRID ACCESS HANDLING
-	 * #######################################
+	 * ####################################### GRID ACCESS HANDLING #######################################
 	 */
 	/*
-	 * ############################ the same procedure as every year...
-	 * ###########################
+	 * ############################ the same procedure as every year... ###########################
 	 */
 
 	private IPlayGrid getGrid() {
@@ -696,18 +700,36 @@ public class GameController extends ObservableGame implements IGameController {
 
 	}
 
+	//############################### PERSISTENCE FUNCTIONALITY #########################
+	
+	/**
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.controller.IGameController#createUser(java.lang.String, java.lang.String)
+	 */
 	public User createUser(String username, String password) {
 		return dao.createUser(username, password);
 	}
 	
+	/**
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.controller.IGameController#updateUser(de.linma.breakout.data.user.User)
+	 */
 	public void updateUser(User user){
 		dao.updateUser(user);
 	}
 
+	/**
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.controller.IGameController#checkUser(java.lang.String, java.lang.String)
+	 */
 	public User checkUser(String username, String password) {
 		return dao.getUser(username, password);
 	}
 	
+	/**
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.controller.IGameController#close()
+	 */
 	public void close(){
 		dao.close();
 	}

@@ -2,27 +2,39 @@ package de.linma.breakout.controller;
 
 import junit.framework.TestCase;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.dao.IDao;
 import de.linma.breakout.view.tui.UITextView;
 
 public class TestUITextView extends TestCase {
+	
+	@Mock
+	private Logger logger;
+	
+	@Mock
+	private IDao dummyDao;
 
 	private IPlayGrid grid = new PlayGrid(500, 500);
 	
-	private GameController controller;
-
+	@InjectMocks
+	private GameController controller = new GameController(grid, "test\\");
 
 	@Before
 	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		
 		System.out.println("setUp()\n");
 
 		// create controller
-		controller = new GameController(grid, "test\\");
 		controller.clearGrid();
 
 		controller.initialize();

@@ -1,11 +1,11 @@
 package de.linma.breakout.view.wui.controllers;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import play.api.Play;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
@@ -14,12 +14,9 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 
-import de.linma.breakout.communication.GAME_STATE;
-import de.linma.breakout.communication.MENU_ITEM;
-import de.linma.breakout.controller.GameController;
+import de.linma.breakout.AppGlobal;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.User;
 
@@ -27,13 +24,20 @@ import de.linma.breakout.data.user.User;
  * Main controller of Play application
  */
 public class Application extends Controller {
+	
+	@Inject
+	private Logger logger;
 
 	@Inject
 	private IGameController gameController; // game instance
 
-	private static final String USER_NAME = "linma.webtech";
-	private static final String USER_PW = "900150983cd24fb0d6963f7d28e17f72";
-
+	/**
+	 * Default Constructor
+	 */
+	public Application() {
+		super();
+	}
+	
 	/**
 	 * Initializes the global game instance.
 	 */
@@ -41,8 +45,7 @@ public class Application extends Controller {
 		return gameController;
 	}
 
-	// ########################## FORMS AUTHENTICATION HANDLERS
-	// ###########################
+	// ########################## FORMS AUTHENTICATION HANDLERS ###########################
 
 	/**
 	 * Returns name/email of logged in user or empty string.
@@ -88,9 +91,10 @@ public class Application extends Controller {
 		// get form data from request
 		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
 		User userLogin = filledForm.get();
-		User userDB = gameController.checkUser(userLogin.getUsername(),
-				userLogin.getPassword());
+		User userDB = gameController.checkUser(userLogin.getUsername(), userLogin.getPassword());
 
+		logger.log(Level.INFO, "User: " + userLogin.getUsername() + " Password: " + userLogin.getPassword() + " tryes to Login");
+		
 		if (userDB != null) { // login is correct
 			session().clear();
 			session("UserName", userDB.getUsername());
@@ -119,8 +123,7 @@ public class Application extends Controller {
 				.render("Username already exists."));
 	}
 
-	// #################### HANDLERS FOR OPEN ID AUTHENTICATION
-	// ##################
+	// #################### HANDLERS FOR OPEN ID AUTHENTICATION ##################
 
 	/**
 	 * GET: /auth Show login page for OpenID authentication
@@ -150,8 +153,7 @@ public class Application extends Controller {
 		return redirect(routes.Application.index());
 	}
 
-	// #################### ACTIONS FOR WEBSOCKET VERSION
-	// ##########################
+	// #################### ACTIONS FOR WEBSOCKET VERSION ##########################
 
 	/**
 	 * GET: /socket_index Returns the Websocket-based main page layout of the
@@ -167,6 +169,7 @@ public class Application extends Controller {
 	 * running game
 	 */
 	public WebSocket<String> socket_connect() {
+//		return AppGlobal.getAppInjector().getInstance(IGamew) TODO
 		return new GameWebSocket(getGameController());
 	}
 

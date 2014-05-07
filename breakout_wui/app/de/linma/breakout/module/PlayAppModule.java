@@ -8,6 +8,8 @@ import de.linma.breakout.controller.GameController;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.dao.DaoDB4O;
+import de.linma.breakout.data.dao.IDao;
 import de.linma.breakout.view.wui.controllers.Application;
 
 /**
@@ -29,6 +31,8 @@ public class PlayAppModule extends AbstractModule {
 		// playgrid
 		bind(IPlayGrid.class).toInstance(new PlayGrid(GRID_DEF_HEIGHT, GRID_DEF_WIDTH));
 		
+		bind(IDao.class).to(DaoDB4O.class);
+		
 		// gamecontroller
 		// check path for injection
 		String path = "";
@@ -41,7 +45,7 @@ public class PlayAppModule extends AbstractModule {
 		bind(Application.class).toInstance(new Application());
 		
 		// Logger
-		bind(Logger.class).toInstance(Logger.getLogger("Breakout"));
+		bind(Logger.class).toInstance(Logger.getLogger("Breakout"));		
 	}
 
 }
