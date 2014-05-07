@@ -1,40 +1,41 @@
 package de.linma.breakout.data.user;
 
-import javax.persistence.Id;
+import org.codehaus.jackson.annotate.JsonProperty;
 
-public class User {
-	
-	private static User user = null;
 
-	@Id
+public class User{
+
 	private String username;
-	
-	private String password;	
-	
+	private String rev;
+	private String password;
+
 	public User() {
 		super();
 	}
-	
+
 	public User(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.rev = null;
 	}
-	
+
+	@JsonProperty("_id")
 	public String getUsername() {
 		if (username == null) {
 			return "";
 		}
 		return username;
 	}
-	
+
 	public String getPassword() {
 		if (password == null) {
 			return "";
 		}
 		return password;
-	}	
-	
+	}
+
+	@JsonProperty("_id")
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -43,14 +44,9 @@ public class User {
 		this.password = password;
 	}
 
-	public static User findByUsername(String username) {
-		if (user == null) {
-			user = new User("luma", "lülü");
-		}
-		return user;
-	}
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -64,7 +60,9 @@ public class User {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -88,5 +86,15 @@ public class User {
 			return false;
 		return true;
 	}
+
+	@JsonProperty("_rev")
+	public String getRev() {
+		return rev;
+	}
 	
+	@JsonProperty("_rev")
+	public void setRev(String rev) {
+		this.rev = rev;
+	}
+
 }
