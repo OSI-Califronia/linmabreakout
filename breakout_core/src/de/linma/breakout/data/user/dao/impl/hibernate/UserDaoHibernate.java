@@ -33,14 +33,28 @@ public class UserDaoHibernate implements IUserDao {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<IUser> getAllUsers() {
+		Session session = null;
+		Transaction tx = null;
 		try {
-			Session session = HibernateUtil.getInstance().getCurrentSession();
+			session = HibernateUtil.getInstance().getCurrentSession();
+			
+			tx = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(UserHibernate.class);
-			return criteria.list();
+			List<IUser> userList = criteria.list();
 			
+			tx.commit();
+			
+			return userList;
 		} catch (HibernateException ex) {
 			logger.error("Failed to get User", ex);
+						
+			if (tx != null) {
+				try {
+					tx.rollback();
+				} catch (HibernateException exRb) {	}
+			}
+			
 			return null;
 		}
 	}
@@ -50,20 +64,33 @@ public class UserDaoHibernate implements IUserDao {
 	 * @see de.linma.breakout.data.user.dao.IUserDao#getUser(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	public IUser getUser(final String username) {	
+	public IUser getUser(final String username) {
+		Session session = null;
+		Transaction tx = null;
 		try {
-			Session session = HibernateUtil.getInstance().getCurrentSession();
-			
+			session = HibernateUtil.getInstance().getCurrentSession();
+			tx = session.beginTransaction();
+						
 			Criteria criteria = session.createCriteria(UserHibernate.class);
-			criteria.add(Restrictions.eq("userName", username));
+			criteria.add(Restrictions.eq("id", username));
 						
 			List<? extends IUser> result = criteria.list();
+			
+			tx.commit();
+			
 			if (result.size() > 0) {
 				return result.get(0);
 			}
 			return null;
 		} catch (HibernateException ex) {
 			logger.error("Failed to get User", ex);
+			
+			if (tx != null) {
+				try {
+					tx.rollback();
+				} catch (HibernateException exRb) {	}
+			}
+			
 			return null;
 		}
 	}
@@ -160,6 +187,14 @@ public class UserDaoHibernate implements IUserDao {
 	 */
 	public void close() {
 		HibernateUtil.getInstance().close();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.data.user.dao.IUserDao#setLogger(org.apache.log4j.Logger)
+	 */
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 
 }

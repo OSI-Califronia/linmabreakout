@@ -2,9 +2,22 @@ package de.linma.breakout.data.user.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import de.linma.breakout.data.user.IUser;
 
+/**
+ * 
+ * @author MBausch
+ *
+ */
 public interface IUserDao {
+	
+	/**
+	 * This method sets the logger
+	 * @param logger
+	 */
+	void setLogger(Logger logger);
 
 	/**
 	 * Returns all stored Users.

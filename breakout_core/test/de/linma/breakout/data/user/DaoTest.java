@@ -6,7 +6,6 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,99 +21,39 @@ public class DaoTest extends TestCase {
 	@Mock
 	private Logger logger;
 
-	private IUserDao db4o;
-	private IUserDao couchDb;
-	
 	@InjectMocks
 	private IUserDao testingDao;
-
+	
 	@Before
-	protected void setUp() {
-		
-		
-		db4o = new UserDaoDB4O("db40_junit.db");
-		couchDb = new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout_test");
+	public void before() {
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
 	public void testDb4o() {
-		IUser userFirst = db4o.createUser("Name1", "pass1");
-		IUser userSecond = db4o.createUser("Name2", "pass2");
-		IUser userThird = db4o.createUser("Name3", "pass3");
-		
-		List<IUser> allUsers = db4o.getAllUsers();
-		assertEquals(3, allUsers.size());
-		
-		IUser userDbFirst = db4o.getUser("Name1");
-		assertEquals(userFirst, userDbFirst);
-		
-		IUser userDbSecond = db4o.getUser("Name2");
-		assertEquals(userSecond, userDbSecond);
-		
-		IUser userDbThird = db4o.getUser("Name3");
-		assertEquals(userThird, userDbThird);
-		
-		userFirst.setUsername("new1");
-		userSecond.setUsername("new2");
-		userThird.setUsername("new3");
-		db4o.updateUser(userFirst);
-		db4o.updateUser(userSecond);
-		db4o.updateUser(userThird);
-		
-		List<IUser> allUsersNew = db4o.getAllUsers();
-		assertEquals(3, allUsersNew.size());
-		
-		IUser userDbFirstNew = db4o.getUser("new1");
-		assertEquals(userFirst, userDbFirstNew);
-		
-		IUser userDbSecondNew = db4o.getUser("new2");
-		assertEquals(userSecond, userDbSecondNew);
-		
-		IUser userDbThirdNew = db4o.getUser("new3");
-		assertEquals(userThird, userDbThirdNew);
-		
-		IUser userNotExist = db4o.getUser("empty");
-		assertNull(userNotExist);
-		
-		db4o.deleteUser(userFirst);
-		db4o.deleteUser(userSecond);
-		db4o.deleteUser(userThird);
-		
-		List<IUser> allUsersEmpty = db4o.getAllUsers();
-		assertEquals(0, allUsersEmpty.size());
+		testingDao = new UserDaoDB4O("db40_junit_test.db");
+		testingDao.setLogger(logger);
+				
+		daoTesting();
 	}
 	
 	@Test
 	public void testCouchDB(){
-		IUser userFirst = couchDb.createUser("Name1", "pass1");
-		IUser userSecond = couchDb.createUser("Name2", "pass2");
-		IUser userThird = couchDb.createUser("Name3", "pass3");
+		testingDao = new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07_test");
+		testingDao.setLogger(logger);
 		
-		IUser userDbFirst = couchDb.getUser("Name1");
-		assertEquals(userFirst, userDbFirst);
-		
-		IUser userDbSecond = couchDb.getUser("Name2");
-		assertEquals(userSecond, userDbSecond);
-		
-		IUser userDbThird = couchDb.getUser("Name3");
-		assertEquals(userThird, userDbThird);
-		
-		couchDb.deleteUser(userFirst);
-		couchDb.deleteUser(userSecond);
-		couchDb.deleteUser(userThird);
+		daoTesting();
 	}
 	
-	@Test
-	@Ignore
+	@Test	
 	public void testHibernate() {
 		testingDao = new UserDaoHibernate();
-		
-		MockitoAnnotations.initMocks(this);
+		testingDao.setLogger(logger);
 		
 		daoTesting();
 	}
 
-	public void daoTesting() {
+	private void daoTesting() {		
 		IUser userFirst = testingDao.createUser("Name1", "pass1");
 		IUser userSecond = testingDao.createUser("Name2", "pass2");
 		IUser userThird = testingDao.createUser("Name3", "pass3");
@@ -131,9 +70,9 @@ public class DaoTest extends TestCase {
 		IUser userDbThird = testingDao.getUser("Name3");
 		assertEquals(userThird, userDbThird);
 		
-		userFirst.setUsername("new1");
-		userSecond.setUsername("new2");
-		userThird.setUsername("new3");
+		userFirst.setPassword("new1");
+		userSecond.setPassword("new2");
+		userThird.setPassword("new3");
 		testingDao.updateUser(userFirst);
 		testingDao.updateUser(userSecond);
 		testingDao.updateUser(userThird);
@@ -141,17 +80,14 @@ public class DaoTest extends TestCase {
 		List<IUser> allUsersNew = testingDao.getAllUsers();
 		assertEquals(3, allUsersNew.size());
 		
-		IUser userDbFirstNew = testingDao.getUser("new1");
-		assertEquals(userFirst, userDbFirstNew);
+		userDbFirst = testingDao.getUser("Name1");
+		assertEquals(userDbFirst.getPassword(), "new1");
 		
-		IUser userDbSecondNew = testingDao.getUser("new2");
-		assertEquals(userSecond, userDbSecondNew);
+		userDbSecond = testingDao.getUser("Name2");
+		assertEquals(userDbSecond.getPassword(), "new2");
 		
-		IUser userDbThirdNew = testingDao.getUser("new3");
-		assertEquals(userThird, userDbThirdNew);
-		
-		IUser userNotExist = testingDao.getUser("empty");
-		assertNull(userNotExist);
+		userDbThird = testingDao.getUser("Name3");
+		assertEquals(userDbThird.getPassword(), "new3");
 		
 		testingDao.deleteUser(userFirst);
 		testingDao.deleteUser(userSecond);
@@ -163,6 +99,6 @@ public class DaoTest extends TestCase {
 	
 	@Override
 	protected void tearDown(){
-		db4o.close();
+		testingDao.close();
 	}
 }

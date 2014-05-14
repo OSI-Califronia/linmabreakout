@@ -148,4 +148,11 @@ public class UserDaoDB4O implements IUserDao {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.data.user.dao.IUserDao#setLogger(org.apache.log4j.Logger)
+	 */
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
 }

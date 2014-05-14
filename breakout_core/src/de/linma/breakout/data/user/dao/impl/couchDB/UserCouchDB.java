@@ -20,6 +20,9 @@ public class UserCouchDB extends User {
 	
 	public UserCouchDB(IUser modelUser) {
 		super(modelUser);
+		if (modelUser instanceof UserCouchDB) {
+			this.rev = ((UserCouchDB) modelUser).getRev();
+		}
 	}
 	
 	/**
