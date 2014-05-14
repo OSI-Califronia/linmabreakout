@@ -6,13 +6,12 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import de.linma.breakout.data.user.dao.IUserDao;
+import de.linma.breakout.data.user.dao.impl.couchDB.UserCouchDB;
 import de.linma.breakout.data.user.dao.impl.couchDB.UserDaoCouchDB;
 import de.linma.breakout.data.user.dao.impl.db4o.UserDaoDB4O;
 import de.linma.breakout.data.user.dao.impl.hibernate.UserDaoHibernate;
@@ -38,9 +37,19 @@ public class DaoTest extends TestCase {
 	}
 	
 	@Test
-	public void testCouchDB(){
+	public void testCouchDB(){		
 		testingDao = new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07_test");
 		testingDao.setLogger(logger);
+		
+		if (testingDao.getUser("Name1") != null) {
+			testingDao.deleteUser(new UserCouchDB("Name1", ""));
+		}
+		if (testingDao.getUser("Name2") != null) {
+			testingDao.deleteUser(new UserCouchDB("Name2", ""));
+		}
+		if (testingDao.getUser("Name3") != null) {
+			testingDao.deleteUser(new UserCouchDB("Name3", ""));
+		}
 		
 		daoTesting();
 	}
