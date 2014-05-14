@@ -2,21 +2,21 @@ package de.linma.breakout.data.user;
 
 import java.io.Serializable;
 
-import lombok.NoArgsConstructor;
-
-
 /**
  * 
  * @author MBausch
  *
  */
-@NoArgsConstructor
 public class User implements IUser, Serializable {
 
 	private static final long serialVersionUID = 2006900087503758999L;
 	
 	private String username;	
 	private String password;
+	
+	public User(){
+		super();
+	}
 
 	public User(IUser user) {
 		this(user.getUsername(), user.getPassword());

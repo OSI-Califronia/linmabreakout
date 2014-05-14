@@ -36,6 +36,10 @@ public class UserHibernate extends User {
 		super(username, password);
 	}
 	
+	public UserHibernate(){
+		super();
+	}
+	
 	
 	@Id
     @Column(name = "id", nullable = false)

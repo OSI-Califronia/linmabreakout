@@ -18,7 +18,7 @@ public class HibernateUtil {
 	
 	static {
 			final AnnotationConfiguration cfg = new	AnnotationConfiguration();
-			cfg.configure("/hibernate.cfg.xml");
+			cfg.configure();
 			sessionFactory = cfg.buildSessionFactory();
 	}
 		
