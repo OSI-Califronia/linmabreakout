@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,11 +22,10 @@ public class DaoTest extends TestCase {
 	@Mock
 	private Logger logger;
 
-	@InjectMocks
 	private IUserDao testingDao;
 	
 	@Before
-	public void before() {
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
 

@@ -101,6 +101,11 @@ public class UserDaoCouchDB implements IUserDao {
 		}		
 		try {
 			db.update(updUser);
+			
+			if (user instanceof UserCouchDB) {
+				((UserCouchDB) user).setRev(updUser.getRev());
+			}
+			
 			return true;
 			
 		} catch (UpdateConflictException e) {
