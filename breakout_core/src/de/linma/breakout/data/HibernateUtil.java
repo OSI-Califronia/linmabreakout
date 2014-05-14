@@ -1,4 +1,4 @@
-package de.linma.breakout.data.user.dao.impl.hibernate;
+package de.linma.breakout.data;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

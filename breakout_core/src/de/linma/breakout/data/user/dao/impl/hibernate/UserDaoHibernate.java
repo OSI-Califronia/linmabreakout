@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.google.inject.Inject;
 
+import de.linma.breakout.data.HibernateUtil;
 import de.linma.breakout.data.user.IUser;
 import de.linma.breakout.data.user.dao.IUserDao;
 

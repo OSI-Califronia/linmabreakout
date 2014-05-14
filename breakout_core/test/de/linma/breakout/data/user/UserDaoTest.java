@@ -16,7 +16,7 @@ import de.linma.breakout.data.user.dao.impl.couchDB.UserDaoCouchDB;
 import de.linma.breakout.data.user.dao.impl.db4o.UserDaoDB4O;
 import de.linma.breakout.data.user.dao.impl.hibernate.UserDaoHibernate;
 
-public class DaoTest extends TestCase {
+public class UserDaoTest extends TestCase {
 	
 	@Mock
 	private Logger logger;

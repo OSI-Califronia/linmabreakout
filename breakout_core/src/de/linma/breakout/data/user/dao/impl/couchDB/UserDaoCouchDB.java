@@ -117,7 +117,7 @@ public class UserDaoCouchDB implements IUserDao {
 	public void close() {
 		// no implementation needed
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see de.linma.breakout.data.user.dao.IUserDao#setLogger(org.apache.log4j.Logger)
