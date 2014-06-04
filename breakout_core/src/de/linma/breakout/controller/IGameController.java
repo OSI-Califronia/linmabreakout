@@ -3,6 +3,7 @@ package de.linma.breakout.controller;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.IObservableGame;
@@ -182,5 +183,11 @@ public interface IGameController extends IObservableGame {
 	boolean updateUser(final User user);
 	
 	void close();
-
+	
+	String getDao();
+	
+	void setDao(String daoKey);
+	
+	Set<String> getDaoImpls();
+	
 }
