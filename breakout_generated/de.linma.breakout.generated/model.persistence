@@ -1,0 +1,32 @@
+PersistenceModel BreakoutModel {
+
+	PersistenceEntity User {
+		persistenceName "breakout1_user"
+		
+		idProperty Property username {
+			type String
+		}
+		
+		Property password {
+			isNullable false
+			type String
+		}
+	}
+	
+	PersistenceEntity Highscore {
+		persistenceName "breakout1_highscore"
+		
+		idProperty Property id {
+			type Integer
+		}
+		Property username {
+			isNullable false
+			type String
+		}
+		Property score {
+			isNullable false
+			type Integer
+		}		
+	}	
+	
+}

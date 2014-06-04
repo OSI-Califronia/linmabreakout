@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.linma.breakout.generated/src-gen" editDirectory="/de.linma.breakout.generated.edit/src"
+    editorDirectory="/de.linma.breakout.generated.editor/src" modelPluginID="de.linma.breakout.generated"
+    forceOverwrite="true" modelName="Persistence" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.linma.breakout.generated.edit"
+    editorPluginID="de.linma.breakout.generated.editor" runtimeVersion="2.9">
+  <genPackages prefix="Persistence" basePackage="de.linma.breakout" disposableProviderFactory="true"
+      fileExtensions="persistence" ecorePackage="Persistence.ecore#/">
+    <genClasses ecoreClass="Persistence.ecore#//Model"/>
+    <genClasses ecoreClass="Persistence.ecore#//PersistenceModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//PersistenceModel/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Persistence.ecore#//PersistenceModel/persistenceEntities"/>
+    </genClasses>
+    <genClasses ecoreClass="Persistence.ecore#//PersistenceEntity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//PersistenceEntity/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//PersistenceEntity/hasPersistenceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//PersistenceEntity/persistenceName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Persistence.ecore#//PersistenceEntity/idProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Persistence.ecore#//PersistenceEntity/property"/>
+    </genClasses>
+    <genClasses ecoreClass="Persistence.ecore#//Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//Property/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//Property/isNullable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//Property/nullable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Persistence.ecore#//Property/type"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

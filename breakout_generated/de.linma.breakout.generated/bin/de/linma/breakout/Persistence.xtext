@@ -1,0 +1,33 @@
+grammar de.linma.breakout.Persistence with org.eclipse.xtext.common.Terminals
+
+generate persistence "http://www.linma.de/breakout/Persistence"
+
+Model:
+	PersistenceModel;	
+	
+terminal TYPE:
+	'String'|'Boolean'|'Integer'|'Byte'
+;	
+terminal BOOLEAN:
+	'true'|'false'
+;
+
+PersistenceModel:
+	'PersistenceModel' name=ID '{'
+		(persistenceEntities+=PersistenceEntity)*
+	'}';
+	
+PersistenceEntity:
+	'PersistenceEntity' name=ID '{'
+	    (
+	    	(hasPersistenceName?='persistenceName' persistenceName=STRING)? &
+	    	('idProperty' idProperty=Property) &
+	    	(property+=Property)*
+	    )		
+	'}'; 
+	
+Property:
+	'Property' name=ID '{'		
+		(isNullable?='isNullable' nullable=BOOLEAN)? &
+	 	('type' type=TYPE)
+	'}'; 
