@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -70,6 +73,9 @@ public class GameController extends ObservableGame implements IGameController {
 	private IPlayGrid grid;
 
 	@Inject
+	private Map<String, IUserDao> mapDaos;
+	
+	@Inject
 	private IUserDao dao;
 
 	private String appPath; // base directory of application
@@ -87,19 +93,19 @@ public class GameController extends ObservableGame implements IGameController {
 	private static final int DEFAULT_SLIDER_STEP = 5;
 
 	/**
-	 * Default constructor
-	 * DO NOT USE
+	 * Default constructor DO NOT USE
 	 */
 	public GameController() {
 		super();
 	}
-	
+
 	/**
 	 * Default Constructor with path
+	 * 
 	 * @param appPath
 	 */
 	public GameController(final String appPath) {
-		super();		
+		super();
 		this.appPath = appPath;
 	}
 
@@ -112,10 +118,12 @@ public class GameController extends ObservableGame implements IGameController {
 	}
 
 	/*
-	 * ####################################### GAME INFRASTRUCTURE #######################################
+	 * ####################################### GAME INFRASTRUCTURE
+	 * #######################################
 	 */
 	/*
-	 * ############################### Basics to make the game a game ##############################
+	 * ############################### Basics to make the game a game
+	 * ##############################
 	 */
 
 	/**
@@ -449,7 +457,8 @@ public class GameController extends ObservableGame implements IGameController {
 	 * @see de.linma.breakout.controller.IGameController#saveLevel()
 	 */
 	public String saveLevel() {
-		String filepath = appPath + LEVEL_PATH + "userLevel" + System.nanoTime() + ".lvl";
+		String filepath = appPath + LEVEL_PATH + "userLevel"
+				+ System.nanoTime() + ".lvl";
 		if (saveLevel(new File(filepath))) {
 			return filepath;
 		} else {
@@ -578,10 +587,12 @@ public class GameController extends ObservableGame implements IGameController {
 	}
 
 	/*
-	 * ####################################### GRID ACCESS HANDLING #######################################
+	 * ####################################### GRID ACCESS HANDLING
+	 * #######################################
 	 */
 	/*
-	 * ############################ the same procedure as every year... ###########################
+	 * ############################ the same procedure as every year...
+	 * ###########################
 	 */
 
 	private IPlayGrid getGrid() {
@@ -701,59 +712,96 @@ public class GameController extends ObservableGame implements IGameController {
 
 	}
 
-	//############################### PERSISTENCE FUNCTIONALITY #########################
-	
+	// ############################### PERSISTENCE FUNCTIONALITY
+	// #########################
+
 	/**
 	 * (non-Javadoc)
-	 * @see de.linma.breakout.controller.IGameController#createUser(java.lang.String, java.lang.String)
+	 * 
+	 * @see de.linma.breakout.controller.IGameController#createUser(java.lang.String,
+	 *      java.lang.String)
 	 */
 	public IUser createUser(final String username, final String password) {
 		IUser existingUser = dao.getUser(username);
 		if (existingUser != null) {
 			return null;
-		}		
-	
+		}
+
 		return dao.createUser(username, password);
 	}
-	
+
 	/**
 	 * (non-Javadoc)
+	 * 
 	 * @see de.linma.breakout.controller.IGameController#updateUser(de.linma.breakout.data.user.User)
 	 */
-	public boolean updateUser(final User user){
+	public boolean updateUser(final User user) {
 		// check input
 		if (user == null) {
 			return false;
 		}
-		
+
 		// check if user exists
 		if (dao.getUser(user.getUsername()) == null) {
 			return false;
 		}
-		
+
 		dao.updateUser(user);
-		
+
 		return true;
 	}
 
 	/**
 	 * (non-Javadoc)
-	 * @see de.linma.breakout.controller.IGameController#checkUser(java.lang.String, java.lang.String)
+	 * 
+	 * @see de.linma.breakout.controller.IGameController#checkUser(java.lang.String,
+	 *      java.lang.String)
 	 */
 	public IUser checkUser(final String username, final String password) {
 		IUser user = dao.getUser(username);
-		if (user != null && password != null && user.getUsername().equals(password)) {
+		if (user != null && password != null
+				&& user.getPassword().equals(password)) {
 			return user;
 		}
 		return null;
 	}
-	
+
 	/**
 	 * (non-Javadoc)
+	 * 
 	 * @see de.linma.breakout.controller.IGameController#close()
 	 */
-	public void close(){
+	public void close() {
 		dao.close();
+	}
+	
+	public String getDao(){
+		for (Entry<String, IUserDao> daoEntry : mapDaos.entrySet()) {
+			if(daoEntry.getValue() == dao)
+				return daoEntry.getKey();
+		}
+		return "";
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.linma.breakout.controller.IGameController#setDao(int)
+	 */
+	public void setDao(String daoKey) {
+		if(mapDaos.containsKey(daoKey)){
+			dao = mapDaos.get(daoKey);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.linma.breakout.controller.IGameController#getDaos()
+	 */
+	public Set<String> getDaoImpls() {
+		return mapDaos.keySet();
 	}
 
 }

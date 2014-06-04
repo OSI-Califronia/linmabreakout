@@ -20,6 +20,7 @@ import play.mvc.WebSocket;
 import com.google.inject.Inject;
 
 import de.linma.breakout.controller.IGameController;
+import de.linma.breakout.data.user.IUser;
 import de.linma.breakout.data.user.User;
 
 /**
@@ -28,6 +29,8 @@ import de.linma.breakout.data.user.User;
 @NoArgsConstructor
 public class Application extends Controller {
 	
+	private static final String SUPERUSER = "linam.webtech";
+
 	@Inject
 	private Logger logger;
 
@@ -35,8 +38,9 @@ public class Application extends Controller {
 	@Getter
 	private IGameController gameController; // game instance
 	
-	
-	// ########################## FORMS AUTHENTICATION HANDLERS ###########################
+
+	// ########################## FORMS AUTHENTICATION HANDLERS
+	// ###########################
 
 	/**
 	 * Returns name/email of logged in user or empty string.
@@ -82,17 +86,20 @@ public class Application extends Controller {
 		// get form data from request
 		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
 		User userLogin = filledForm.get();
-		User userDB = gameController.checkUser(userLogin.getUsername(), userLogin.getPassword());
+		IUser userDB = gameController.checkUser(userLogin.getUsername(),
+				userLogin.getPassword());
 
-		logger.log(Level.INFO, "User: " + userLogin.getUsername() + " Password: " + userLogin.getPassword() + " tryes to Login");
-		
+		logger.log(Level.INFO, "User: " + userLogin.getUsername()
+				+ " Password: " + userLogin.getPassword() + " tryes to Login");
+
 		if (userDB != null) { // login is correct
 			session().clear();
 			session("UserName", userDB.getUsername());
 			return redirect(routes.Application.index());
 		}
 
-		return ok(de.linma.breakout.view.wui.views.html.login.render("Username or password are wrong."));
+		return ok(de.linma.breakout.view.wui.views.html.login
+				.render("Username or password are wrong."));
 	}
 
 	/**
@@ -102,7 +109,7 @@ public class Application extends Controller {
 		// get form data from request
 		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
 		User userLogin = filledForm.get();
-		User userDB = gameController.createUser(userLogin.getUsername(),
+		IUser userDB = gameController.createUser(userLogin.getUsername(),
 				userLogin.getPassword());
 		if (userDB != null) {
 			session().clear();
@@ -113,7 +120,8 @@ public class Application extends Controller {
 				.render("Username already exists."));
 	}
 
-	// #################### HANDLERS FOR OPEN ID AUTHENTICATION ##################
+	// #################### HANDLERS FOR OPEN ID AUTHENTICATION
+	// ##################
 
 	/**
 	 * GET: /auth Show login page for OpenID authentication
@@ -143,7 +151,8 @@ public class Application extends Controller {
 		return redirect(routes.Application.index());
 	}
 
-	// #################### ACTIONS FOR WEBSOCKET VERSION ##########################
+	// #################### ACTIONS FOR WEBSOCKET VERSION
+	// ##########################
 
 	/**
 	 * GET: /socket_index Returns the Websocket-based main page layout of the
@@ -159,8 +168,31 @@ public class Application extends Controller {
 	 * running game
 	 */
 	public WebSocket<String> socket_connect() {
-//		return AppGlobal.getAppInjector().getInstance(IGamew) TODO
+		// return AppGlobal.getAppInjector().getInstance(IGamew) TODO
 		return new GameWebSocket(getGameController());
+	}
+	
+	/**
+	 * GET: /showAdmin
+	 */
+	public Result showAdmin(){
+		if (!getActiveUser().equals(SUPERUSER)) {
+			return redirect(routes.Application.index());
+		}
+		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(gameController.getDaoImpls(), gameController.getDao()));
+	}
+	
+	/**
+	 * Post: /showAdmin
+	 */
+	public Result setDao(){
+		if (!getActiveUser().equals(SUPERUSER)) {
+			return redirect(routes.Application.index());
+		}
+		DynamicForm requestData = Form.form().bindFromRequest();
+		String newDao = requestData.get("dao");
+		gameController.setDao(newDao);
+		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(gameController.getDaoImpls(), gameController.getDao()));
 	}
 
 }

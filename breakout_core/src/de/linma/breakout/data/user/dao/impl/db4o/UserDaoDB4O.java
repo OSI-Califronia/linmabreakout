@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
+import com.db4o.ext.DatabaseClosedException;
+import com.db4o.ext.Db4oIOException;
 import com.db4o.query.Predicate;
 import com.google.inject.Inject;
 
@@ -135,13 +137,15 @@ public class UserDaoDB4O implements IUserDao {
 				}
 	
 			});
-		} catch(Exception ex) {
+		} catch(Db4oIOException ex) {
 			logger.error("Failed to store User", ex);
-			
+			System.out.println("Db4oIOException: " + ex.getMessage());
 			user = new ArrayList<IUser>();
+		} catch (DatabaseClosedException e) {
+			System.out.println("DatabaseClosedException: " + e.getMessage());
 		}
 		
-		if (user.size() > 0) {
+		if (user != null && user.size() > 0) {
 			return user.get(0);
 		} else {
 			return null;

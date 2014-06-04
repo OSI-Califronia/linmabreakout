@@ -9,6 +9,9 @@ GET		/register                @de.linma.breakout.view.wui.controllers.Applicatio
 POST	/register                @de.linma.breakout.view.wui.controllers.Application.processRegistration()
 GET		/logout					 @de.linma.breakout.view.wui.controllers.Application.logout()
 
+GET		/showAdmin				 @de.linma.breakout.view.wui.controllers.Application.showAdmin()
+POST	/showAdmin				 @de.linma.breakout.view.wui.controllers.Application.setDao()
+
 #websocket routes
 GET		/socket_connect			 @de.linma.breakout.view.wui.controllers.Application.socket_connect()
 
