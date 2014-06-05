@@ -47,7 +47,7 @@ public class PlayAppModule extends AbstractModule {
 //		if (Play.current().path().getAbsolutePath().startsWith("/app")) {
 //			path = "/app/";	
 //		}		
-		bind(IGameController.class).toInstance(new GameController(path));
+		bind(IGameController.class).to(GameController.class);
 		
 		// Application Controller
 		bind(Application.class).toInstance(new Application());

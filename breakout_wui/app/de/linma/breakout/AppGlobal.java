@@ -34,14 +34,14 @@ public class AppGlobal extends GlobalSettings {
 	public void onStart(Application application) {		
 		super.onStart(application);		
        
-		IGameController gameController = injector.getInstance(IGameController.class);
+//		IGameController gameController = injector.getInstance(IGameController.class);
 		
 		// Open Swing GUI of game
 //		MainWindow mainWindow = new MainWindow(gameController);                
 //		gameController.addObserver(mainWindow.getBpaGameView2D());
 //		mainWindow.setVisible(true);
 		
-    	gameController.initialize();	
+//    	gameController.initialize();	
 	}
 	
 	/*

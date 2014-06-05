@@ -19,6 +19,7 @@ import play.mvc.WebSocket;
 
 import com.google.inject.Inject;
 
+import de.linma.breakout.AppGlobal;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.IUser;
 import de.linma.breakout.data.user.User;
@@ -34,13 +35,14 @@ public class Application extends Controller {
 	@Inject
 	private Logger logger;
 
-	@Inject
-	@Getter
+//	@Inject
+//	@Getter
 	private IGameController gameController; // game instance
 	
+	// Map of active Users and their GameControllers
+	private Map<String, IGameController> gameControllerMap = new HashMap<String, IGameController>();
 
-	// ########################## FORMS AUTHENTICATION HANDLERS
-	// ###########################
+	// ########################## FORMS AUTHENTICATION HANDLERS ###########################
 
 	/**
 	 * Returns name/email of logged in user or empty string.
@@ -86,21 +88,27 @@ public class Application extends Controller {
 		// get form data from request
 		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
 		User userLogin = filledForm.get();
-		IUser userDB = gameController.checkUser(userLogin.getUsername(),
+		IUser userDB = getGameController().checkUser(userLogin.getUsername(),
 				userLogin.getPassword());
 
 		logger.log(Level.INFO, "User: " + userLogin.getUsername()
 				+ " Password: " + userLogin.getPassword() + " tryes to Login");
 
-		if (userDB != null) { // login is correct
-			session().clear();
-			session("UserName", userDB.getUsername());
+		// login is correct
+		if (userDB != null) { 
+			initializeGame(userDB);
+			
+			logger.log(Level.INFO, "User: " + userLogin.getUsername()
+					+ " Password: " + userLogin.getPassword() + " -> login successfully");
 			return redirect(routes.Application.index());
 		}
 
+		// login is wrong
+		logger.log(Level.INFO, "User: " + userLogin.getUsername()
+				+ " Password: " + userLogin.getPassword() + " -> username or password are wrong");
 		return ok(de.linma.breakout.view.wui.views.html.login
 				.render("Username or password are wrong."));
-	}
+	}	
 
 	/**
 	 * POST: /processRegistration Processes a forms registration.
@@ -109,19 +117,32 @@ public class Application extends Controller {
 		// get form data from request
 		Form<User> filledForm = DynamicForm.form(User.class).bindFromRequest();
 		User userLogin = filledForm.get();
-		IUser userDB = gameController.createUser(userLogin.getUsername(),
+		IUser userDB = getGameController().createUser(userLogin.getUsername(),
 				userLogin.getPassword());
 		if (userDB != null) {
-			session().clear();
-			session("UserName", userDB.getUsername());
-			return redirect(routes.Application.index());
+			initializeGame(userDB);
 		}
 		return ok(de.linma.breakout.view.wui.views.html.register
 				.render("Username already exists."));
 	}
+	
+	/**
+	 * Initializes the Game if a valid User has been registrated
+	 * @param userDB
+	 */
+	private void initializeGame(IUser userDB) {
+		// fill session
+		session().clear();
+		session("UserName", userDB.getUsername());
+		
+		// get new GameController Object
+		if (!gameControllerMap.containsKey(userDB.getUsername())) {				
+			gameControllerMap.put(userDB.getUsername(), getGameController());
+			gameController = null;
+		}
+	}
 
-	// #################### HANDLERS FOR OPEN ID AUTHENTICATION
-	// ##################
+	// #################### HANDLERS FOR OPEN ID AUTHENTICATION ##################
 
 	/**
 	 * GET: /auth Show login page for OpenID authentication
@@ -151,8 +172,7 @@ public class Application extends Controller {
 		return redirect(routes.Application.index());
 	}
 
-	// #################### ACTIONS FOR WEBSOCKET VERSION
-	// ##########################
+	// #################### ACTIONS FOR WEBSOCKET VERSION ##########################
 
 	/**
 	 * GET: /socket_index Returns the Websocket-based main page layout of the
@@ -167,9 +187,14 @@ public class Application extends Controller {
 	 * GET: /socket_connect Initializes a new WebSocket connection to the
 	 * running game
 	 */
-	public WebSocket<String> socket_connect() {
-		// return AppGlobal.getAppInjector().getInstance(IGamew) TODO
-		return new GameWebSocket(getGameController());
+	public WebSocket<String> socket_connect() {		
+		IGameController controller = getActiveGameController(getActiveUser());
+		if (controller == null) {
+			session().clear();
+			throw new IllegalStateException("no valid session");
+		}		
+		
+		return new GameWebSocket(controller);
 	}
 	
 	/**
@@ -179,7 +204,7 @@ public class Application extends Controller {
 		if (!getActiveUser().equals(SUPERUSER)) {
 			return redirect(routes.Application.index());
 		}
-		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(gameController.getDaoImpls(), gameController.getDao()));
+		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(getGameController().getDaoImpls(), getGameController().getDao()));
 	}
 	
 	/**
@@ -191,8 +216,35 @@ public class Application extends Controller {
 		}
 		DynamicForm requestData = Form.form().bindFromRequest();
 		String newDao = requestData.get("dao");
-		gameController.setDao(newDao);
-		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(gameController.getDaoImpls(), gameController.getDao()));
+		getGameController().setDao(newDao);
+		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(getGameController().getDaoImpls(), getGameController().getDao()));
+	}
+	
+	/**
+	 * This method returns the active gameController for this Session
+	 *  lazy loading is done here
+	 *  
+	 * @return gameController
+	 */
+	public IGameController getGameController() {
+		// create new GameController
+		if (gameController == null) {
+			gameController = AppGlobal.getAppInjector().getInstance(IGameController.class);
+			gameController.initialize();
+		}
+		return gameController;
 	}
 
+	/**
+	 * This method returns the Active Game Controller or null if its not present
+	 * @param userName
+	 * @return gameController
+	 */
+	public IGameController getActiveGameController(String userName) {
+		if (userName == null || userName.equals("")) {
+			return null;
+		}
+		
+		return gameControllerMap.get(userName);
+	}
 }

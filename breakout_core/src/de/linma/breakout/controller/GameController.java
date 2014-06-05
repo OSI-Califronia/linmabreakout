@@ -97,6 +97,7 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	public GameController() {
 		super();
+		this.appPath = "";
 	}
 
 	/**
