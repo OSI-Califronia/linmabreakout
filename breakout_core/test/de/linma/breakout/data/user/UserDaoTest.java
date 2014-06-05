@@ -38,7 +38,7 @@ public class UserDaoTest extends TestCase {
 	
 	@Test
 	public void testCouchDB(){		
-		testingDao = new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07_test");
+		testingDao = new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07_test_user");
 		testingDao.setLogger(logger);
 		
 		if (testingDao.getUser("Name1") != null) {

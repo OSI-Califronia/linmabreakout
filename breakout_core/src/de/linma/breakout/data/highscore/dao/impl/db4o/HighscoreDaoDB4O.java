@@ -36,9 +36,11 @@ public class HighscoreDaoDB4O implements IHighscoreDao {
 		try {
 			List<IHighscore> resultList = db.query(IHighscore.class);
 			
-			Collections.sort(resultList);
+			List<IHighscore> sortList = new ArrayList<IHighscore>(resultList);
+						
+			Collections.sort(sortList);
 			
-			return resultList;
+			return sortList;
 		} catch(Exception ex) {
 			logger.error("Failed to load Highscore List ", ex);
 			
@@ -97,9 +99,4 @@ public class HighscoreDaoDB4O implements IHighscoreDao {
 	public void close() {
 		db.close();
 	}
-
-	
-	
-	
-
 }

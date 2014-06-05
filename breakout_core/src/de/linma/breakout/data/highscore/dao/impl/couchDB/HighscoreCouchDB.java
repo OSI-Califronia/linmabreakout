@@ -1,5 +1,7 @@
 package de.linma.breakout.data.highscore.dao.impl.couchDB;
 
+import lombok.NoArgsConstructor;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import de.linma.breakout.data.highscore.Highscore;
@@ -10,6 +12,7 @@ import de.linma.breakout.data.highscore.IHighscore;
  * @author MBausch
  *
  */
+@NoArgsConstructor
 public class HighscoreCouchDB extends Highscore {
 
 	private static final long serialVersionUID = 463710480859416549L;

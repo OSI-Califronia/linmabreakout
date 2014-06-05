@@ -1,5 +1,6 @@
 package de.linma.breakout.data.highscore.dao.impl.hibernate;
 
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Setter;
@@ -10,7 +11,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
 
 import com.google.inject.Inject;
 
@@ -38,10 +38,11 @@ public class HighscoreDaoHibernate implements IHighscoreDao {
 			tx = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(HighscoreHibernate.class);
-			criteria.addOrder(Order.desc("points"));
 			List<IHighscore> list = criteria.list();
-			
+						
 			tx.commit();
+			
+			Collections.sort(list);
 			
 			return list;
 		} catch (HibernateException ex) {

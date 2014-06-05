@@ -16,5 +16,6 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="show_sql">false</property>
 		<mapping class="de.linma.breakout.data.user.dao.impl.hibernate.UserHibernate"/>
+		<mapping class="de.linma.breakout.data.highscore.dao.impl.hibernate.HighscoreHibernate"/>
 </session-factory>
 </hibernate-configuration>

@@ -20,6 +20,10 @@ public class Highscore implements IHighscore, Serializable {
 	private Date date;
 	private Integer points;
 	
+	public Highscore() {
+		super();
+	}
+	
 	public Highscore(final String userName, final Integer points) {
 		super();
 		this.userName = userName;
@@ -61,10 +65,19 @@ public class Highscore implements IHighscore, Serializable {
 			return 1;
 		}
 		
+		// check Points
 		if (h2.getPoints() == null) {
 			return 1; 
-		} else {
-			return this.points.compareTo(h2.getPoints());
+		}		
+		int res1 = h2.getPoints().compareTo(this.points);		
+		if (res1 != 0) {
+			return res1;
+		} 
+		
+		// check date
+		if (h2.getDate() == null) {
+			return 1;
 		}
+		return this.date.compareTo(h2.getDate());
 	}
 }

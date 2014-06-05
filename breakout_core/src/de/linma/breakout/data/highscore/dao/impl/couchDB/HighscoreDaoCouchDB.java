@@ -45,9 +45,9 @@ public class HighscoreDaoCouchDB implements IHighscoreDao {
 	public List<IHighscore> getSortedHighscore() {
 		List<IHighscore> highscoreList = new ArrayList<IHighscore>();
 		for (String id : db.getAllDocIds()) {
-			IHighscore user = getHighscoreById(id);
-			if (user != null) {
-				highscoreList.add(user);
+			IHighscore highscore = getHighscoreById(id);
+			if (highscore != null) {
+				highscoreList.add(highscore);
 			}
 		}
 		

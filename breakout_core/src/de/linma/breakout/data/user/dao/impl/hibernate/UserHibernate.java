@@ -20,6 +20,13 @@ public class UserHibernate extends User {
 	private static final long serialVersionUID = -1485101148535671194L;
 
 	/**
+	 *  Default Constructor
+	 */
+	public UserHibernate(){
+		super();
+	}
+	
+	/**
 	 * Constructor for cloneing
 	 * @param modelUser
 	 */
@@ -35,11 +42,6 @@ public class UserHibernate extends User {
 	public UserHibernate(final String username, final String password) {
 		super(username, password);
 	}
-	
-	public UserHibernate(){
-		super();
-	}
-	
 	
 	@Id
     @Column(name = "id", nullable = false)
