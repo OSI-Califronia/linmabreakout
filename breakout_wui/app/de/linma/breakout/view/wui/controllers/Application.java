@@ -30,7 +30,7 @@ import de.linma.breakout.data.user.User;
 @NoArgsConstructor
 public class Application extends Controller {
 	
-	private static final String SUPERUSER = "linam.webtech";
+	private static final String SUPERUSER = "linma.webtech";
 
 	@Inject
 	private Logger logger;
@@ -121,6 +121,7 @@ public class Application extends Controller {
 				userLogin.getPassword());
 		if (userDB != null) {
 			initializeGame(userDB);
+			return redirect(routes.Application.index());
 		}
 		return ok(de.linma.breakout.view.wui.views.html.register
 				.render("Username already exists."));
