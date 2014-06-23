@@ -9,6 +9,8 @@ import de.linma.breakout.controller.GameController;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.highscore.dao.IHighscoreDao;
+import de.linma.breakout.data.highscore.dao.impl.hibernate.HighscoreDaoHibernate;
 import de.linma.breakout.data.user.dao.IUserDao;
 import de.linma.breakout.data.user.dao.impl.couchDB.UserDaoCouchDB;
 import de.linma.breakout.data.user.dao.impl.db4o.UserDaoDB4O;
@@ -33,6 +35,8 @@ public class PlayAppModule extends AbstractModule {
 	protected void configure() {
 		// playgrid
 		bind(IPlayGrid.class).toInstance(new PlayGrid(GRID_DEF_HEIGHT, GRID_DEF_WIDTH));
+		
+		// bind user persistence
 		IUserDao db4o = new UserDaoDB4O("breakout1_07.db4o");
 		bind(IUserDao.class).toInstance(db4o);
 		MapBinder<String, IUserDao> daoBinder = MapBinder.newMapBinder(binder(), String.class, IUserDao.class);
@@ -40,13 +44,10 @@ public class PlayAppModule extends AbstractModule {
 		daoBinder.addBinding("CouchDB").toInstance(new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07"));
 		daoBinder.addBinding("Hibernate").toInstance(new UserDaoHibernate());
 		
+		// bind highscore persistence
+		bind(IHighscoreDao.class).to(HighscoreDaoHibernate.class);
 		
 		// gamecontroller
-		// check path for injection
-		String path = "";
-//		if (Play.current().path().getAbsolutePath().startsWith("/app")) {
-//			path = "/app/";	
-//		}		
 		bind(IGameController.class).to(GameController.class);
 		
 		// Application Controller

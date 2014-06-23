@@ -348,7 +348,7 @@ public class GameController extends ObservableGame implements IGameController {
 		// TextMapping.getTextForIndex(TextMapping.TXT_MAIN_MENU));
 
 		notifyGameMenu(new MENU_ITEM[] { MENU_ITEM.MNU_NEW_GAME,
-				MENU_ITEM.MNU_LEVEL_CHOOSE, MENU_ITEM.MNU_END },
+				MENU_ITEM.MNU_LEVEL_CHOOSE, MENU_ITEM.MNU_HIGHSCORE, MENU_ITEM.MNU_END },
 				TextMapping.getTextForIndex(TextMapping.TXT_MAIN_MENU));
 	}
 	
