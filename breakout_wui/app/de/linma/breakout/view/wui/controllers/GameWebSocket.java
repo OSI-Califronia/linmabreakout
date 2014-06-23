@@ -3,8 +3,6 @@ package de.linma.breakout.view.wui.controllers;
 import java.io.File;
 import java.util.logging.Level;
 
-import org.openqa.selenium.android.library.Logger;
-
 import play.api.templates.Html;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
