@@ -34,7 +34,7 @@ public class UserDaoTest extends TestCase {
 		testingDao = new UserDaoDB4O("db40_junit_test.db");
 		testingDao.setLogger(logger);
 				
-		daoTesting();
+		daoTesting(0);
 	}
 	
 	@Test
@@ -52,25 +52,24 @@ public class UserDaoTest extends TestCase {
 			testingDao.deleteUser(new UserCouchDB("Name3", ""));
 		}
 		
-		daoTesting();
+		daoTesting(0);
 	}
 	
-	@Test	
-	@Ignore
+	@Test
 	public void testHibernate() {
 		testingDao = new UserDaoHibernate();
 		testingDao.setLogger(logger);
 		
-		daoTesting();
+		daoTesting(2);
 	}
 
-	private void daoTesting() {		
+	private void daoTesting(int startEntry) {		
 		IUser userFirst = testingDao.createUser("Name1", "pass1");
 		IUser userSecond = testingDao.createUser("Name2", "pass2");
 		IUser userThird = testingDao.createUser("Name3", "pass3");
 		
 		List<IUser> allUsers = testingDao.getAllUsers();
-		assertEquals(3, allUsers.size());
+		assertEquals(startEntry +3, allUsers.size());
 		
 		IUser userDbFirst = testingDao.getUser("Name1");
 		assertEquals(userFirst, userDbFirst);
@@ -89,7 +88,7 @@ public class UserDaoTest extends TestCase {
 		testingDao.updateUser(userThird);
 		
 		List<IUser> allUsersNew = testingDao.getAllUsers();
-		assertEquals(3, allUsersNew.size());
+		assertEquals(startEntry +3, allUsersNew.size());
 		
 		userDbFirst = testingDao.getUser("Name1");
 		assertEquals(userDbFirst.getPassword(), "new1");
@@ -105,7 +104,7 @@ public class UserDaoTest extends TestCase {
 		testingDao.deleteUser(userThird);
 		
 		List<IUser> allUsersEmpty = testingDao.getAllUsers();
-		assertEquals(0, allUsersEmpty.size());
+		assertEquals(startEntry, allUsersEmpty.size());
 	}
 	
 	@Override
