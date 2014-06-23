@@ -34,6 +34,8 @@ public final class TextMapping {
 	public static final int TXT_GAME_PAUSED = 10;
 	/** */
 	public static final int TXT_BACK_TO_MAIN_MENU = 11;
+	/** */
+	public static final int TXT_HIGHSCORE = 12;
 	
 	/**
 	 * This mthod returns a String for Txt index
@@ -64,6 +66,8 @@ public final class TextMapping {
 			return "Spiel angehalten";
 		case TXT_BACK_TO_MAIN_MENU:
 			return "Zurück zum Hauptmenü";
+		case TXT_HIGHSCORE:
+			return "Highscore";
 		default:
 			return "?";			
 		}
@@ -90,6 +94,8 @@ public final class TextMapping {
 			return getTextForIndex(TXT_LEVEL_CHOOSE);
 		case MNU_LEVEL_EDITOR:
 			return getTextForIndex(TXT_LEVEL_EDITOR);
+		case MNU_HIGHSCORE:
+			return getTextForIndex(TXT_HIGHSCORE);
 		default:
 			return "?";
 		}

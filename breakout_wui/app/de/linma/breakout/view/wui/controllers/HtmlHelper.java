@@ -6,6 +6,7 @@ import java.util.List;
 import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.TextMapping;
 import de.linma.breakout.controller.IGameController;
+import de.linma.breakout.data.highscore.IHighscore;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
 import de.linma.breakout.data.objects.impl.MovingBrick;
@@ -43,6 +44,19 @@ public class HtmlHelper {
 			this.y = y;
 			this.width = width;
 			this.height = height;
+		}
+	}
+	
+	public static class HighscoreItemParameter {
+		public Integer number;
+		public String username;
+		public Integer score;
+		
+		public HighscoreItemParameter(Integer number, String username, Integer score) {
+			super();
+			this.number = number;
+			this.username = username;
+			this.score = score;
 		}
 	}
 	
@@ -102,5 +116,31 @@ public class HtmlHelper {
 	
 	public static MenuParameter getMenu(MENU_ITEM[] menuItems, String title) {
 		return new MenuParameter(title, getMenuItems(menuItems));
+	}
+	
+	public static List<HighscoreItemParameter> getHighscoreItems(IGameController gameController) {
+		List<HighscoreItemParameter> highscoreList = new ArrayList<HighscoreItemParameter>();
+		
+		// real Highscore data
+		int i = 1;
+		for(IHighscore score : gameController.getHighscoreList()) {
+			HighscoreItemParameter htmlScore = new HighscoreItemParameter(i, score.getUserName(), score.getPoints());
+						
+			highscoreList.add(htmlScore);
+			i++;
+			
+			// display only 10 scores
+			if (i > 10) {
+				break;
+			}
+		}
+		
+		
+		// dummy data
+//		highscoreList.add(new HighscoreItemParameter(1, "gustel@html.net", 400));
+//		highscoreList.add(new HighscoreItemParameter(2, "manfred@gmx.net", 300));
+//		highscoreList.add(new HighscoreItemParameter(3, "gogo@google.com", 100));
+		
+		return highscoreList;
 	}
 }

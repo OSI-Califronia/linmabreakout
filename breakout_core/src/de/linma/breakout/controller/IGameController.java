@@ -8,6 +8,7 @@ import java.util.Set;
 import de.linma.breakout.communication.GAME_STATE;
 import de.linma.breakout.communication.IObservableGame;
 import de.linma.breakout.communication.MENU_ITEM;
+import de.linma.breakout.data.highscore.IHighscore;
 import de.linma.breakout.data.menu.GameMenu;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
@@ -101,6 +102,14 @@ public interface IGameController extends IObservableGame {
 	 * @return
 	 */
 	List<String> getLevelList();
+	
+
+	/*
+	 * ####################################### HIGHSCORE HANDLING
+	 * #######################################
+	 */
+	
+	List<IHighscore> getHighscoreList();
 
 	/*
 	 * ####################################### GRID ACCESS HANDLING

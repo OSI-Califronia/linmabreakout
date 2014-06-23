@@ -19,7 +19,7 @@ import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
  * Manages a WebSocket connection to a client.
  * Receives events from webbrowser and send game content to the client.
  */
-public class GameWebSocket extends WebSocket<String> implements IGameObserver{
+public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 	
 	private Gson gson;
 	private play.mvc.WebSocket.In<String> in;
@@ -47,6 +47,14 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver{
 		// level selection Menu
 		if (gameController.getState() == GAME_STATE.MENU_LEVEL_SEL) {			
 			out.write("LEVEL:" + gson.toJson(gameController.getLevelList()));
+		}
+		
+		// highscore Menu
+		if (gameController.getState() == GAME_STATE.MENU_HIGHSCORE) {
+			Html highscore = de.linma.breakout.view.wui.views.html.highscore.render(
+					HtmlHelper.getHighscoreItems(gameController));
+			
+			out.write("HIGHSCORE:" + highscore.body());
 		}
 	}
 

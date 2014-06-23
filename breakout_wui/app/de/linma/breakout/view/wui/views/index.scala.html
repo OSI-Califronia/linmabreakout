@@ -57,6 +57,10 @@
 
 				$('#PlayGrid').html(levelDOM);
 
+			// Highscore Table Message: 
+			} else if (type == "HIGHSCORE") {
+				$('#PlayGrid').html(content);
+				
 			// Game State changed message
 			} else if (type == "STATE") {
 				state = content;

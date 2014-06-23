@@ -17,5 +17,7 @@ public enum GAME_STATE {
 	/** Display main menu */
 	MENU_MAIN,
 	/** Terminate game */
-	KILLED
+	KILLED,
+	/** Highscore menu */
+	MENU_HIGHSCORE
 }

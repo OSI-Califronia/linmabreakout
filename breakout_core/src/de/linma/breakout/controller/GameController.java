@@ -28,6 +28,8 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.ObservableGame;
 import de.linma.breakout.communication.TextMapping;
 import de.linma.breakout.data.IPlayGrid;
+import de.linma.breakout.data.highscore.IHighscore;
+import de.linma.breakout.data.highscore.dao.IHighscoreDao;
 import de.linma.breakout.data.menu.GameMenu;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
@@ -73,10 +75,13 @@ public class GameController extends ObservableGame implements IGameController {
 	private IPlayGrid grid;
 
 	@Inject
-	private Map<String, IUserDao> mapDaos;
+	private Map<String, IUserDao> userDaoMap;
 	
 	@Inject
-	private IUserDao dao;
+	private IUserDao userDao;
+	
+	@Inject
+	private IHighscoreDao highscoreDao;
 
 	private String appPath; // base directory of application
 	private Timer timer;
@@ -346,6 +351,13 @@ public class GameController extends ObservableGame implements IGameController {
 				MENU_ITEM.MNU_LEVEL_CHOOSE, MENU_ITEM.MNU_END },
 				TextMapping.getTextForIndex(TextMapping.TXT_MAIN_MENU));
 	}
+	
+	/**
+	 * Display the Highscore game menu.
+	 */
+	private void showHighscore() {
+		setState(GAME_STATE.MENU_HIGHSCORE);
+	}	
 
 	/**
 	 * Process the given menu input. It is not checked whether the given menu
@@ -389,7 +401,6 @@ public class GameController extends ObservableGame implements IGameController {
 			this.start();
 			break;
 		case MNU_NEXT_LEVEL:
-
 			this.setCreativeMode(false);
 			// last level
 			levelIndex++;
@@ -400,6 +411,9 @@ public class GameController extends ObservableGame implements IGameController {
 			loadLevel(new File(getLevelList().get(levelIndex)));
 			this.start();
 			break;
+		case MNU_HIGHSCORE:
+			showHighscore();
+			
 		default:
 			break;
 		}
@@ -445,6 +459,30 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	private void setCreativeMode(boolean enableCreativeMode) {
 		this.isInCreativeMode = enableCreativeMode;
+	}
+	
+	/*
+	 * ####################################### HIGHSCORE HANDLING
+	 * #######################################
+	 */
+	
+	/**
+	 * This method returns the Highscore List sorted
+	 * first is the best
+	 */
+	public List<IHighscore> getHighscoreList() {
+		List<IHighscore> highscoreList = highscoreDao.getSortedHighscore();
+		return highscoreList;
+	}
+	
+	/**
+	 * Adds a new Highscore to the List
+	 * @param userName
+	 * @param points
+	 * @return
+	 */
+	public boolean createHighscore(final String userName, final Integer points) {
+		return highscoreDao.addHighscore(userName, points);
 	}
 
 	/*
@@ -723,12 +761,12 @@ public class GameController extends ObservableGame implements IGameController {
 	 *      java.lang.String)
 	 */
 	public IUser createUser(final String username, final String password) {
-		IUser existingUser = dao.getUser(username);
+		IUser existingUser = userDao.getUser(username);
 		if (existingUser != null) {
 			return null;
 		}
 
-		return dao.createUser(username, password);
+		return userDao.createUser(username, password);
 	}
 
 	/**
@@ -743,11 +781,11 @@ public class GameController extends ObservableGame implements IGameController {
 		}
 
 		// check if user exists
-		if (dao.getUser(user.getUsername()) == null) {
+		if (userDao.getUser(user.getUsername()) == null) {
 			return false;
 		}
 
-		dao.updateUser(user);
+		userDao.updateUser(user);
 
 		return true;
 	}
@@ -759,7 +797,7 @@ public class GameController extends ObservableGame implements IGameController {
 	 *      java.lang.String)
 	 */
 	public IUser checkUser(final String username, final String password) {
-		IUser user = dao.getUser(username);
+		IUser user = userDao.getUser(username);
 		if (user != null && password != null
 				&& user.getPassword().equals(password)) {
 			return user;
@@ -773,16 +811,15 @@ public class GameController extends ObservableGame implements IGameController {
 	 * @see de.linma.breakout.controller.IGameController#close()
 	 */
 	public void close() {
-		dao.close();
+		userDao.close();
 	}
 	
 	public String getDao(){
-		for (Entry<String, IUserDao> daoEntry : mapDaos.entrySet()) {
-			if(daoEntry.getValue() == dao)
+		for (Entry<String, IUserDao> daoEntry : userDaoMap.entrySet()) {
+			if(daoEntry.getValue() == userDao)
 				return daoEntry.getKey();
 		}
 		return "";
-
 	}
 
 	/*
@@ -791,8 +828,8 @@ public class GameController extends ObservableGame implements IGameController {
 	 * @see de.linma.breakout.controller.IGameController#setDao(int)
 	 */
 	public void setDao(String daoKey) {
-		if(mapDaos.containsKey(daoKey)){
-			dao = mapDaos.get(daoKey);
+		if(userDaoMap.containsKey(daoKey)){
+			userDao = userDaoMap.get(daoKey);
 		}
 	}
 
@@ -802,7 +839,6 @@ public class GameController extends ObservableGame implements IGameController {
 	 * @see de.linma.breakout.controller.IGameController#getDaos()
 	 */
 	public Set<String> getDaoImpls() {
-		return mapDaos.keySet();
+		return userDaoMap.keySet();
 	}
-
 }
