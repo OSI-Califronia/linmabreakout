@@ -7,6 +7,7 @@ import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -55,6 +56,7 @@ public class HighscoreDaoTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testHibernate() {
 		testingDao = new HighscoreDaoHibernate();
 		testingDao.setLogger(logger);
