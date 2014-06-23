@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -55,6 +56,7 @@ public class UserDaoTest extends TestCase {
 	}
 	
 	@Test	
+	@Ignore
 	public void testHibernate() {
 		testingDao = new UserDaoHibernate();
 		testingDao.setLogger(logger);

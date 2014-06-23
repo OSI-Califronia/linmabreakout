@@ -7,7 +7,6 @@ import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -55,13 +54,13 @@ public class HighscoreDaoTest {
 		daoTesting();
 	}
 	
-//	@Test
-//	public void testHibernate() {
-//		testingDao = new HighscoreDaoHibernate();
-//		testingDao.setLogger(logger);
-//		
-//		daoTesting();
-//	}
+	@Test
+	public void testHibernate() {
+		testingDao = new HighscoreDaoHibernate();
+		testingDao.setLogger(logger);
+		
+		daoTesting();
+	}
 
 	private void daoTesting() {	
 		testingDao.clearHighscore();
