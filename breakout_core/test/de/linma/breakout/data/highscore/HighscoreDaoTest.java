@@ -55,14 +55,13 @@ public class HighscoreDaoTest {
 		daoTesting();
 	}
 	
-	@Test
-	@Ignore
-	public void testHibernate() {
-		testingDao = new HighscoreDaoHibernate();
-		testingDao.setLogger(logger);
-		
-		daoTesting();
-	}
+//	@Test
+//	public void testHibernate() {
+//		testingDao = new HighscoreDaoHibernate();
+//		testingDao.setLogger(logger);
+//		
+//		daoTesting();
+//	}
 
 	private void daoTesting() {	
 		testingDao.clearHighscore();
