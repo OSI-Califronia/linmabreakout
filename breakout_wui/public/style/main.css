@@ -11,6 +11,10 @@ h1, .TechInfo {
 	font-family: Impact, sans-serif;
 }
 
+form {
+	text-align: center;
+}
+
 .TechInfo {
 	position: fixed;
 	text-align: right;
@@ -86,3 +90,24 @@ h1, .TechInfo {
 	padding-top: 15px;
 	cursor: pointer;
 }
+
+#highscore_table {
+	margin-left:auto; 
+    margin-right:auto;
+}
+
+.highscore_entry {
+	margin-left:auto; 
+    margin-right:auto;
+	padding-top: 15px;
+	widht: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	text-decoration: none;
+	font-family: Impact, sans-serif;
+	font-size: 16pt;
+	text-align:center;
+}
+

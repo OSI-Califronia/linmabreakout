@@ -137,7 +137,13 @@
 			socket.send('level:' + $(this).attr('data-level'));
 			return false;
 		});
-
+		
+		/* click handler for highscore next button */
+		$('#PlayGrid').on('mousedown', 'a.highscoreButton', function (e) {
+			socket.send('highscore:');
+			return false;
+		});
+		
 	});
 	</script>
 

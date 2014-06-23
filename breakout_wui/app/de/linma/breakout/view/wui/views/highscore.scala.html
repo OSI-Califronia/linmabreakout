@@ -1,28 +1,22 @@
 @(highscorelist: List[de.linma.breakout.view.wui.controllers.HtmlHelper.HighscoreItemParameter])
 
-@main("Breakout") {
-	<div class="Highscore">
-		<a href="register">[Register]</a>
+<h1>Highscore</h1>
+<form id="highscoreForm">
+	<table id="highscore_table">
+		<tr>
+			<td class="highscore_header">Platz</td>
+			<td class="highscore_header">User</td>
+			<td class="highscore_header">Punkte</td>
+		</tr>
+		@for(highscore <- highscorelist) {		
+			<tr>
+				<td class="highscore_entry"> @(highscore.number)</td>
+				<td class="highscore_entry"> @(highscore.username)</td>
+				<td class="highscore_entry"> @(highscore.score)</td>
+			</tr>	
+		}			
+	</table>
+	<br>
+		<a class="highscoreButton btn btn-default navbar-btn" href="#">next</a>
 	</div>
-	<br >
-	<h1>Highscore</h1>
-	<form id="highscore">
-		<table id="highscore_table" style="widht: 100%">
-			<tr id="highscore_header">
-				<td>Platz</td>
-				<td>User</td>
-				<td>Punkte</td>
-			</tr>
-			@for(highscore <- highscorelist) {		
-				<tr>
-					<td> @(highscore.number)</td>
-					<td> @(highscore.username)</td>
-					<td> @(highscore.score)</td>
-				</tr>	
-			}			
-		</table>
-		<br>
-		<button class="btn btn-default navbar-btn" type="submit">next</button>
-		</div>
-	</form>
-}
+</form>

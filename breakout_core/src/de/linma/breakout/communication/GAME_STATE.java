@@ -18,6 +18,6 @@ public enum GAME_STATE {
 	MENU_MAIN,
 	/** Terminate game */
 	KILLED,
-	/** Highscore menu */
+	/** Display Highscore menu */
 	MENU_HIGHSCORE
 }

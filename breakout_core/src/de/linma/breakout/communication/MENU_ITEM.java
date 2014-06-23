@@ -18,6 +18,8 @@ public enum MENU_ITEM {
 	MNU_BACK_MAIN_MENU,
 	/** Terminate game */
 	MNU_END,
-	/** Highscore */
-	MNU_HIGHSCORE
+	/** Open Highscore */
+	MNU_HIGHSCORE,
+	/** Shows Main Menu or Game over Menu */
+	MNU_HIGHSCORE_NEXT
 }

@@ -37,12 +37,14 @@ public class PlayAppModule extends AbstractModule {
 		bind(IPlayGrid.class).toInstance(new PlayGrid(GRID_DEF_HEIGHT, GRID_DEF_WIDTH));
 		
 		// bind user persistence
-		IUserDao db4o = new UserDaoDB4O("breakout1_07.db4o");
-		bind(IUserDao.class).toInstance(db4o);
+//		IUserDao db4o = new UserDaoDB4O("breakout1_07.db4o");
+//		bind(IUserDao.class).toInstance(db4o);
+		IUserDao defaultDao = new UserDaoHibernate();
+		bind(IUserDao.class).toInstance(defaultDao);
 		MapBinder<String, IUserDao> daoBinder = MapBinder.newMapBinder(binder(), String.class, IUserDao.class);
-		daoBinder.addBinding("DB4O").toInstance(db4o);
+//		daoBinder.addBinding("DB4O").toInstance(new UserDaoDB4O("breakout1_07.db4o"));
 		daoBinder.addBinding("CouchDB").toInstance(new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07"));
-		daoBinder.addBinding("Hibernate").toInstance(new UserDaoHibernate());
+		daoBinder.addBinding("Hibernate").toInstance(defaultDao);
 		
 		// bind highscore persistence
 		bind(IHighscoreDao.class).to(HighscoreDaoHibernate.class);

@@ -257,15 +257,12 @@ public class GameController extends ObservableGame implements IGameController {
 	}
 
 	/**
-	 * Stop the game and display the game over menu.
+	 * Stop the game and display the highscore
 	 */
 	private void gameOver() {
 		cancelTimer();
-
+		
 		setState(GAME_STATE.MENU_GAMEOVER);
-		notifyGameMenu(new MENU_ITEM[] { MENU_ITEM.MNU_NEW_GAME,
-				MENU_ITEM.MNU_BACK_MAIN_MENU, MENU_ITEM.MNU_END },
-				TextMapping.getTextForIndex(TextMapping.TXT_YOU_LOSE));
 	}
 
 	/**
@@ -358,6 +355,15 @@ public class GameController extends ObservableGame implements IGameController {
 	private void showHighscore() {
 		setState(GAME_STATE.MENU_HIGHSCORE);
 	}	
+	
+	/**
+	 * Display the Game Over Menu
+	 */
+	private void showGameOverMenu() {
+		notifyGameMenu(new MENU_ITEM[] { MENU_ITEM.MNU_NEW_GAME,
+				MENU_ITEM.MNU_BACK_MAIN_MENU, MENU_ITEM.MNU_END },
+				TextMapping.getTextForIndex(TextMapping.TXT_YOU_LOSE));
+	}
 
 	/**
 	 * Process the given menu input. It is not checked whether the given menu
@@ -411,9 +417,16 @@ public class GameController extends ObservableGame implements IGameController {
 			loadLevel(new File(getLevelList().get(levelIndex)));
 			this.start();
 			break;
-		case MNU_HIGHSCORE:
+		case MNU_HIGHSCORE: 
+			// displays the Highscore called from main Menu
 			showHighscore();
-			
+		case MNU_HIGHSCORE_NEXT:
+			// diplays main menu or Game over Menu
+			if (getState() != GAME_STATE.MENU_GAMEOVER) {
+				showGameOverMenu();
+			} else {
+				showMainMenu();
+			}			
 		default:
 			break;
 		}

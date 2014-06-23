@@ -1,6 +1,9 @@
 package de.linma.breakout.view.wui.controllers;
 
 import java.io.File;
+import java.util.logging.Level;
+
+import org.openqa.selenium.android.library.Logger;
 
 import play.api.templates.Html;
 import play.libs.F.Callback;
@@ -50,7 +53,8 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 		}
 		
 		// highscore Menu
-		if (gameController.getState() == GAME_STATE.MENU_HIGHSCORE) {
+		if (gameController.getState() == GAME_STATE.MENU_HIGHSCORE || 
+			gameController.getState() == GAME_STATE.MENU_GAMEOVER) {
 			Html highscore = de.linma.breakout.view.wui.views.html.highscore.render(
 					HtmlHelper.getHighscoreItems(gameController));
 			
@@ -108,6 +112,11 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 					String file = event.substring(event.indexOf(":") +1);
 					GameWebSocket.this.gameController.loadLevel(new File(file));
 					GameWebSocket.this.gameController.processMenuInput(MENU_ITEM.MNU_CONTINUE);
+				}
+				
+				// process highscore next to display main menu or game Over menu
+				if (event.startsWith("highscore:")) {
+					GameWebSocket.this.gameController.processMenuInput(MENU_ITEM.HIGHSCORE_NEXT);
 				}
 			}			
 		});
