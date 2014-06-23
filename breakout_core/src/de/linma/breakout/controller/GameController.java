@@ -90,6 +90,9 @@ public class GameController extends ObservableGame implements IGameController {
 	private GAME_STATE state;
 	private boolean isInCreativeMode;
 	private int levelIndex;
+	
+	private String actualUser;
+	private int actualSorce; // score of one User
 
 	private static final String LEVEL_PATH = "levels/";
 	private static final int FRAME_DELAY = 10;
@@ -136,7 +139,9 @@ public class GameController extends ObservableGame implements IGameController {
 	 * Initialize the game. Has to be called only one time when the game starts
 	 * running
 	 */
-	public void initialize() {
+	public void initialize(String userName) {
+		this.actualUser = userName;
+		
 		showMainMenu();
 	}
 
@@ -190,6 +195,7 @@ public class GameController extends ObservableGame implements IGameController {
 			while (itbrick.hasNext()) {
 				currentBrick = itbrick.next();
 				if (currentBrick.tryCollision(currentBall)) {
+					actualSorce += currentBrick.getScore();
 					itbrick.remove();
 				}
 			}
@@ -261,6 +267,9 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	private void gameOver() {
 		cancelTimer();
+		
+		// add user and score to Highscore
+		highscoreDao.addHighscore(actualUser, actualSorce);
 		
 		setState(GAME_STATE.MENU_GAMEOVER);
 	}
@@ -380,6 +389,7 @@ public class GameController extends ObservableGame implements IGameController {
 		case MNU_NEW_GAME:
 			this.setCreativeMode(false);
 			levelIndex = 0;
+			actualSorce = 0;
 			loadLevel(new File(getLevelList().get(levelIndex)));
 			this.start();
 			break;

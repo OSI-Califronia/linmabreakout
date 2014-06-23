@@ -37,7 +37,7 @@ public class TestExtras extends TestCase {
 		// create controller
 		controller.clearGrid();
 
-		controller.initialize();
+		controller.initialize("TestUser");
 	}
 
 	@Test

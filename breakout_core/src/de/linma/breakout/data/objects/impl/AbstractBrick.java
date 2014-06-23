@@ -12,12 +12,13 @@ import de.linma.breakout.data.objects.IBrick;
  */
 public abstract class AbstractBrick implements IBrick {
 
-	private final static int HEIGHT = 3;
+	private final static int HEIGHT = 3;	
 	
 	private int x;
 	private int y;
 	private int width;
 	private int height;
+	private int score;
 	private int hitCount;
 	
 	private Properties properties;
@@ -44,8 +45,25 @@ public abstract class AbstractBrick implements IBrick {
 		this.width = width;
 		this.height = height;
 	    this.hitCount = 0;
+	    this.score = 0;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.data.objects.IBrick#getScore()
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.data.objects.IBrick#setScore(int)
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	/* (non-Javadoc)
 	 * @see de.luma.breakout.data.objects.IBrick#onNextFrame()
 	 */
@@ -249,6 +267,7 @@ public abstract class AbstractBrick implements IBrick {
 		sb.append(String.format("%d,", this.getY()));
 		sb.append(String.format("%d,", this.getWidth()));
 		sb.append(String.format("%d", this.getHeight()));
+		sb.append(String.format("%d", this.getScore()));
 
 		return sb;
 	}
@@ -263,7 +282,7 @@ public abstract class AbstractBrick implements IBrick {
 		setX(Integer.valueOf(s[0]));
 		setY(Integer.valueOf(s[1]));
 		setWidth(Integer.valueOf(s[2]));
-		setHeight(Integer.valueOf(s[HEIGHT]));	
+		setHeight(Integer.valueOf(s[HEIGHT]));		
 		
 		return s;
 	}

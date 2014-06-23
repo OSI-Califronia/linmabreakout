@@ -19,6 +19,12 @@ public interface IBrick extends IDecodable {
 	void onNextFrame();
 
 	/** */
+	int getScore();
+	
+	/**	 */
+	void setScore(int score);
+	
+	/** */
 	int getX();
 
 	/** */

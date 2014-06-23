@@ -1,4 +1,4 @@
 500,600
 de.linma.breakout.data.objects.InvalidObject:100,470,100,20
 de.linma.breakout.data.objects.impl.Ball:150,200,0.5,2.1,5 
-de.linma.breakout.data.objects.impl.SimpleBrick:10,10,0,0
+de.linma.breakout.data.objects.impl.SimpleBrick:10,10,0,0,10

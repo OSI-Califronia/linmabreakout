@@ -53,7 +53,7 @@ public class TestGameController extends TestCase {
 		view.setController(controller);		
 		controller.addObserver(view);
 
-		controller.initialize();
+		controller.initialize("TestUser");
 	}
 
 

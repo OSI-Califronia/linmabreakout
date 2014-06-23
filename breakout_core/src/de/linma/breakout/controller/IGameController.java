@@ -43,7 +43,7 @@ public interface IGameController extends IObservableGame {
 	 * Initialize the game. Has to be called only one time when the game starts
 	 * running
 	 */
-	void initialize();
+	void initialize(String userName);
 
 	/**
 	 * Calculates the next Game Frame. (only specified for testing)

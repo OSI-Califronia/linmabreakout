@@ -231,7 +231,7 @@ public class Application extends Controller {
 		// create new GameController
 		if (gameController == null) {
 			gameController = AppGlobal.getAppInjector().getInstance(IGameController.class);
-			gameController.initialize();
+			gameController.initialize(getActiveUser());
 		}
 		return gameController;
 	}

@@ -12,8 +12,10 @@ import de.linma.breakout.data.objects.IBall;
 public class MovingBrick extends AbstractBrick {
 
 	private static final int DEFAULT_MOVING_RANGE = 300;
-	private static final int FRAME_COUNTER = 4;
-	private static final int MOVING_RANGE = 5;
+	
+	private final static int SCORE = 4;
+	private static final int FRAME_COUNTER = 5;
+	private static final int MOVING_RANGE = 6;
 	
 	private int frameCounter = 0;
 	private int movingRangeX;
@@ -36,9 +38,9 @@ public class MovingBrick extends AbstractBrick {
 	public void decode(String line) {
 		String[] s = decodeBasic(line);
 		
+		setScore(Integer.valueOf(s[SCORE]));
 		setFrameCounter(Integer.valueOf(s[FRAME_COUNTER]));
-		setMovingRangeX(Integer.valueOf(s[MOVING_RANGE]));
-	
+		setMovingRangeX(Integer.valueOf(s[MOVING_RANGE]));	
 	}
 	
 	/*

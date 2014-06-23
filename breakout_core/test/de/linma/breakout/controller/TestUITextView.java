@@ -37,7 +37,7 @@ public class TestUITextView extends TestCase {
 		// create controller
 		controller.clearGrid();
 
-		controller.initialize();
+		controller.initialize("TestUser");
 	}
 
 

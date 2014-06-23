@@ -12,6 +12,8 @@ public class SimpleBrick extends AbstractBrick {
 	private static final  int DEFAULT_WIDTH = 50;
 	private static final  int DEFAULT_HEIGHT = 20;
 	
+	private final static int SCORE = 4;
+	
 	/**
 	 * constructor 
 	 * @param x
@@ -36,7 +38,9 @@ public class SimpleBrick extends AbstractBrick {
 	 * @see de.luma.breakout.data.objects.IDecodable#decode(java.lang.String)
 	 */
 	public void decode(String line) {
-		super.decodeBasic(line);
+		String[] s = super.decodeBasic(line);
+		
+		setScore(Integer.valueOf(s[SCORE]));
 	}
 
 	/*
