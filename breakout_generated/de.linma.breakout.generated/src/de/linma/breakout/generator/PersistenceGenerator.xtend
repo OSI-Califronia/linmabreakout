@@ -6,6 +6,8 @@ package de.linma.breakout.generator
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
+import de.linma.breakout.persistence.PersistenceEntity
+import de.linma.breakout.persistence.PersistenceModel
 
 /**
  * Generates code from your model files on save.
@@ -15,10 +17,277 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 class PersistenceGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
+		
+		val persistenceModel = resource.contents.head as PersistenceModel
+		
+		for (pEntity:persistenceModel.persistenceEntities) {
+			val entityNameLower = StringExtensions.toFirstLower(pEntity.name);
+			val javaInterfaceCode = createEntityInterface(pEntity, entityNameLower)
+			fsa.generateFile("/de/linma/breakout/data/" + entityNameLower + "/I" + pEntity.name + ".java", javaInterfaceCode)
+			
+			val javaBasecode = createEntityBase(pEntity, entityNameLower)			
+			fsa.generateFile("/de/linma/breakout/data/" + entityNameLower + "/" + pEntity.name + ".java", javaBasecode)
+			
+			val javaCouchDB = createEntityCouchDB(pEntity, entityNameLower)
+			fsa.generateFile("/de/linma/breakout/data/" + entityNameLower + "/dao/impl/couchDB/" + pEntity.name + "CouchDB.java", javaCouchDB)
+		
+			val javaHibernate = createEntityHibernate(pEntity, entityNameLower)
+			fsa.generateFile("/de/linma/breakout/data/" + entityNameLower + "/dao/impl/hibernate/" + pEntity.name + "Hibernate.java", javaHibernate)
+			
+		}	
+		
+		
+	}
+	
+	def createEntityHibernate(PersistenceEntity pEntity, String entityNameLower) {
+		'''
+		package de.linma.breakout.data.«entityNameLower».dao.impl.hibernate;
+		
+		import javax.persistence.Column;
+		import javax.persistence.Entity;
+		import javax.persistence.Id;
+		import javax.persistence.Table;
+		
+		import de.linma.breakout.data.«entityNameLower».I«pEntity.name»;
+		import de.linma.breakout.data.«entityNameLower».«pEntity.name»;
+				
+		@Entity
+		@Table(name="«pEntity.persistenceName»")
+		@NoArgsConstructor
+		public class «pEntity.name»Hibernate extends «pEntity.name» {
+		
+			private static final long serialVersionUID = 1L;
+		
+			public «pEntity.name»Hibernate(I«pEntity.name»  model«pEntity.name» ) {
+				super(model«pEntity.name» );
+			}
+			
+			public «pEntity.name»Hibernate(final «pEntity.idProperty.type» «pEntity.idProperty.name»«FOR property:pEntity.property», final «property.type» «property.name»«ENDFOR») {
+				super(«pEntity.idProperty.name» «FOR property:pEntity.property», «property.name»«ENDFOR»);
+			}			
+			
+			@Id
+		    @Column(name = "id", nullable = false)
+			@Override
+			«createSuperGetter(pEntity.idProperty)»
+			
+			@Override
+			«createSuperSetter(pEntity.idProperty)»
+			
+			«FOR property:pEntity.property»
+				@Override
+				@Column(name = "«property.name»", nullable = «property.isNullable»)
+				«createSuperGetter(property)»
+				
+				@Override
+				«createSuperSetter(property)»
+			«ENDFOR»
+		}
+		
+		'''
+	}
+	
+	def createEntityCouchDB(PersistenceEntity pEntity, String entityNameLower) {
+		'''
+		package de.linma.breakout.data.«entityNameLower».dao.impl.couchDB;
+
+		import org.codehaus.jackson.annotate.JsonProperty;
+		
+		import lombok.NoArgsConstructor;
+		import de.linma.breakout.data.«entityNameLower».I«pEntity.name»;
+		import de.linma.breakout.data.«entityNameLower».«pEntity.name»;
+		
+		@NoArgsConstructor
+		public class «pEntity.name»CouchDB extends «pEntity.name» {
+			
+			private static final long serialVersionUID = 1L;
+			
+			private String rev;
+			
+			public «pEntity.name»CouchDB(I«pEntity.name» model«pEntity.name») {
+				super(model«pEntity.name»);
+				if (model«pEntity.name» instanceof «pEntity.name»CouchDB) {
+					this.rev = ((«pEntity.name»CouchDB) model«pEntity.name»).getRev();
+				}
+			}
+			
+			public «pEntity.name»CouchDB(final «pEntity.idProperty.type» «pEntity.idProperty.name»«FOR property:pEntity.property», final «property.type» «property.name»«ENDFOR») {
+				super(«pEntity.idProperty.name» «FOR property:pEntity.property», «property.name»«ENDFOR»);
+				this.rev = null;
+			}			
+			
+			@JsonProperty("_id")
+			@Override
+			«createSuperGetter(pEntity.idProperty)»
+			
+			@JsonProperty("_id")
+			@Override
+			«createSuperSetter(pEntity.idProperty)»
+			
+			@JsonProperty("_rev")
+			public String getRev() {
+				return rev;
+			}
+			
+			@JsonProperty("_rev")
+			public void setRev(String rev) {
+				this.rev = rev;
+			}
+		}
+		'''
+	}
+	
+	def createEntityInterface(PersistenceEntity pEntity, String entityNameLower) {
+		'''
+		package de.linma.breakout.data.«entityNameLower»;
+		
+		public interface I«pEntity.name» {
+			public «pEntity.idProperty.type» get«StringExtensions.toFirstUpper(pEntity.idProperty.name)»();
+			
+			public void set«StringExtensions.toFirstUpper(pEntity.idProperty.name)»(«pEntity.idProperty.type» «pEntity.idProperty.name»);«»
+			
+			«FOR property:pEntity.property»
+				public «property.type» get«StringExtensions.toFirstUpper(property.name)»();
+				
+				public void set«StringExtensions.toFirstUpper(property.name)»(«property.type» «property.name»);«»
+			«ENDFOR»
+			
+			public int hashCode();
+			
+			public boolean equals(Object obj);
+		}
+		'''
+	}
+	
+	def createEntityBase(PersistenceEntity pEntity, String entityNameLower){
+		'''
+		package de.linma.breakout.data.«entityNameLower»;
+		
+		import java.io.Serializable;
+		
+		public class «pEntity.name» implements I«pEntity.name», Serializable {
+			
+			private static final long serialVersionUID = 1L;
+			
+			private «pEntity.idProperty.type» «pEntity.idProperty.name»;
+			
+			«FOR property:pEntity.property»
+				private «property.type» «property.name»;
+			«ENDFOR»
+			
+			public «pEntity.name»(final «pEntity.idProperty.type» «pEntity.idProperty.name»«FOR property:pEntity.property», final «property.type» «property.name»«ENDFOR») {
+				super();
+				this.«pEntity.idProperty.name» = «pEntity.idProperty.name»;
+				«FOR property:pEntity.property»
+				this.«property.name» = «property.name»;
+				«ENDFOR»
+			}
+			
+			public «pEntity.name»(I«pEntity.name» «entityNameLower») {
+				this(«entityNameLower».get«StringExtensions.toFirstUpper(pEntity.idProperty.name)»()«FOR property:pEntity.property», «entityNameLower».get«StringExtensions.toFirstUpper(property.name)»()«ENDFOR»);
+			}
+			
+			public «pEntity.idProperty.type» get«StringExtensions.toFirstUpper(pEntity.idProperty.name)»() {
+				if («pEntity.idProperty.name» == null) {
+					«IF pEntity.idProperty.type.equals("Integer")»
+					return 0;
+					«ELSE»
+					return "";
+					«ENDIF»
+				}
+				return «pEntity.idProperty.name»;
+			}
+			
+			public void set«StringExtensions.toFirstUpper(pEntity.idProperty.name)»(«pEntity.idProperty.type» «pEntity.idProperty.name») {
+				this.«pEntity.idProperty.name» = «pEntity.idProperty.name»;
+			}
+			
+			«FOR property:pEntity.property»
+			public «property.type» get«StringExtensions.toFirstUpper(property.name)»() {
+				«IF property.nullable.equals("false")»				
+					if («property.name» == null) {
+						«IF property.type.equals("Integer")»
+						return 0;
+						«ELSE»
+						return "";
+						«ENDIF»
+					}
+				«ENDIF»
+				return «property.name»;
+			}
+			
+			public void set«StringExtensions.toFirstUpper(property.name)»(«property.type» «property.name») {
+				this.«property.name» = «property.name»;
+			}
+			«ENDFOR»
+			
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see java.lang.Object#hashCode()
+			 */
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + ((«pEntity.idProperty.name» == null) ? 0 : «pEntity.idProperty.name».hashCode());
+				«FOR property:pEntity.property»
+					result = prime * result + ((«property.name» == null) ? 0 : «property.name».hashCode());
+				«ENDFOR»
+				return result;
+			}
+			
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see java.lang.Object#equals(java.lang.Object)
+			 */
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				«pEntity.name» other = («pEntity.name») obj;
+				if(«pEntity.idProperty.name» == null){
+					if(other.get«StringExtensions.toFirstUpper(pEntity.idProperty.name)»() != null){
+						return false;
+					} 
+				} else if (!«pEntity.idProperty.name».equals(other.get«StringExtensions.toFirstUpper(pEntity.idProperty.name)»()))
+					return false;
+				
+				«FOR property:pEntity.property»
+					if(«property.name» == null){
+						if(other.get«StringExtensions.toFirstUpper(property.name)»() != null){
+							return false;
+						} 
+					} else if (!«property.name».equals(other.get«StringExtensions.toFirstUpper(property.name)»()))
+						return false;
+				«ENDFOR»
+				
+				return true;
+
+			}
+		}
+		'''
+	}
+	
+	
+	def createSuperGetter(de.linma.breakout.persistence.Property prop){
+		'''
+		public «prop.type» get«StringExtensions.toFirstUpper(prop.name)»() {
+			return super.get«StringExtensions.toFirstUpper(prop.name)»();
+		}
+		'''
+	}
+	
+	def createSuperSetter(de.linma.breakout.persistence.Property prop){
+		'''
+		public void set«StringExtensions.toFirstUpper(prop.name)»(«prop.type» «prop.name») {
+			super.set«StringExtensions.toFirstUpper(prop.name)»(«prop.name»);
+		}
+		'''
 	}
 }

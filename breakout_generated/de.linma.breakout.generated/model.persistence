@@ -11,12 +11,17 @@ PersistenceModel BreakoutModel {
 			isNullable false
 			type String
 		}
+		
+		Property address {
+			isNullable true
+			type String
+		}
 	}
 	
 	PersistenceEntity Highscore {
 		persistenceName "breakout1_highscore"
 		
-		idProperty Property id {
+		idProperty Property id {												
 			type Integer
 		}
 		Property username {
