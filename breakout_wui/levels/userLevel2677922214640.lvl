@@ -1,4 +1,5 @@
 500,500
+de.linma.breakout.data.objects.impl.VisibleBrick:1,150,50,20,40,20
 de.linma.breakout.data.objects.impl.SimpleBrick:1,337,50,20,10
 de.linma.breakout.data.objects.impl.SimpleBrick:51,338,50,20,10
 de.linma.breakout.data.objects.impl.SimpleBrick:100,338,50,20,10
