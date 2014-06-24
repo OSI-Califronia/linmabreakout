@@ -12,7 +12,7 @@ import de.linma.breakout.data.objects.IBall;
 public class VisibleBrick extends AbstractBrick {
 
 	private final static int SCORE = 4;
-	private static final int MAX_FRAME_COUNTER = 20;
+	private static final int MAX_FRAME_COUNTER = 5;
 	
 	private int frameCounter = 0;
 	private int maxFrameCounter = 0;
