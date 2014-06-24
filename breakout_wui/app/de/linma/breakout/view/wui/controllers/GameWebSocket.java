@@ -114,7 +114,7 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 				
 				// process highscore next to display main menu or game Over menu
 				if (event.startsWith("highscore:")) {
-					GameWebSocket.this.gameController.processMenuInput(MENU_ITEM.HIGHSCORE_NEXT);
+					GameWebSocket.this.gameController.processMenuInput(MENU_ITEM.MNU_HIGHSCORE_NEXT);
 				}
 			}			
 		});
