@@ -432,8 +432,8 @@ public class GameController extends ObservableGame implements IGameController {
 			showHighscore();
 			break;
 		case MNU_HIGHSCORE_NEXT:
-			// diplays main menu or Game over Menu
-			if (getState() != GAME_STATE.MENU_GAMEOVER) {
+			// displays main menu or Game over Menu
+			if (getState() == GAME_STATE.MENU_GAMEOVER) {
 				showGameOverMenu();
 			} else {
 				showMainMenu();
