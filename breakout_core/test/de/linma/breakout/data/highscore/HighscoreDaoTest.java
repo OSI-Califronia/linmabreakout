@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -21,7 +22,10 @@ public class HighscoreDaoTest {
 	@Mock
 	private Logger logger;
 
-	private IHighscoreDao testingDao;
+	private IHighscoreDao testingDao;	
+	
+	@InjectMocks
+	private HighscorePoster poster = new HighscorePoster("http://de-htwg-sa-highscores.herokuapp.com/", "Breakout1");
 	
 	@Before
 	public void setUp() {
@@ -85,6 +89,12 @@ public class HighscoreDaoTest {
 		entry = list.get(2);
 		Assert.assertEquals(entry.getUserName(), "Name4");
 		Assert.assertEquals(entry.getPoints().intValue(), 200);
+	}
+	
+	@Test
+	public void testHighscorePost() {
+		poster.initialize("test", 50);
+		poster.run();
 	}
 	
 	@After

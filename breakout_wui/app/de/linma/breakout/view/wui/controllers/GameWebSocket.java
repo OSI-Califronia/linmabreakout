@@ -53,6 +53,8 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 		// highscore Menu
 		if (gameController.getState() == GAME_STATE.MENU_HIGHSCORE || 
 			gameController.getState() == GAME_STATE.MENU_GAMEOVER) {
+						
+			// show Highscore
 			Html highscore = de.linma.breakout.view.wui.views.html.highscore.render(
 					HtmlHelper.getHighscoreItems(gameController));
 			

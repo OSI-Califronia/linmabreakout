@@ -28,6 +28,7 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.communication.ObservableGame;
 import de.linma.breakout.communication.TextMapping;
 import de.linma.breakout.data.IPlayGrid;
+import de.linma.breakout.data.highscore.HighscorePoster;
 import de.linma.breakout.data.highscore.IHighscore;
 import de.linma.breakout.data.highscore.dao.IHighscoreDao;
 import de.linma.breakout.data.menu.GameMenu;
@@ -82,6 +83,9 @@ public class GameController extends ObservableGame implements IGameController {
 	
 	@Inject
 	private IHighscoreDao highscoreDao;
+	
+	@Inject
+	private HighscorePoster highscorePoster;
 
 	private String appPath; // base directory of application
 	private Timer timer;
@@ -267,6 +271,10 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	private void gameOver() {
 		cancelTimer();
+		
+		// post highscore
+		highscorePoster.initialize(actualUser, actualSorce);
+		highscorePoster.run();
 		
 		// add user and score to Highscore
 		highscoreDao.addHighscore(actualUser, actualSorce);

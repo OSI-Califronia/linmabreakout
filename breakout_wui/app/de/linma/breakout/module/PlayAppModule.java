@@ -9,11 +9,11 @@ import de.linma.breakout.controller.GameController;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.highscore.HighscorePoster;
 import de.linma.breakout.data.highscore.dao.IHighscoreDao;
 import de.linma.breakout.data.highscore.dao.impl.hibernate.HighscoreDaoHibernate;
 import de.linma.breakout.data.user.dao.IUserDao;
 import de.linma.breakout.data.user.dao.impl.couchDB.UserDaoCouchDB;
-import de.linma.breakout.data.user.dao.impl.db4o.UserDaoDB4O;
 import de.linma.breakout.data.user.dao.impl.hibernate.UserDaoHibernate;
 import de.linma.breakout.view.wui.controllers.Application;
 
@@ -48,6 +48,7 @@ public class PlayAppModule extends AbstractModule {
 		
 		// bind highscore persistence
 		bind(IHighscoreDao.class).to(HighscoreDaoHibernate.class);
+		bind(HighscorePoster.class).toInstance(new HighscorePoster("http://de-htwg-sa-highscores.herokuapp.com/", "Breakout1"));
 		
 		// gamecontroller
 		bind(IGameController.class).to(GameController.class);
