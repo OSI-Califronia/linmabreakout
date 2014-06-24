@@ -12,6 +12,9 @@ GET		/logout					 @de.linma.breakout.view.wui.controllers.Application.logout()
 GET		/showAdmin				 @de.linma.breakout.view.wui.controllers.Application.showAdmin()
 POST	/showAdmin				 @de.linma.breakout.view.wui.controllers.Application.setDao()
 
+GET		/showUsers				 @de.linma.breakout.view.wui.controllers.Application.showUsers()
+POST	/showUsers				 @de.linma.breakout.view.wui.controllers.Application.kickUser()
+
 #websocket routes
 GET		/socket_connect			 @de.linma.breakout.view.wui.controllers.Application.socket_connect()
 

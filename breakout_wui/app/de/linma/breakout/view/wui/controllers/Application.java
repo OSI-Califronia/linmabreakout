@@ -1,7 +1,10 @@
 package de.linma.breakout.view.wui.controllers;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +23,8 @@ import play.mvc.WebSocket;
 import com.google.inject.Inject;
 
 import de.linma.breakout.AppGlobal;
+import de.linma.breakout.communication.GAME_STATE;
+import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.user.IUser;
 import de.linma.breakout.data.user.User;
@@ -39,6 +44,7 @@ public class Application extends Controller {
 	
 	// Map of active Users and their GameControllers
 	private Map<String, IGameController> gameControllerMap = new HashMap<String, IGameController>();
+	private Map<String, GameWebSocket> webSocketMap = new HashMap<String, GameWebSocket>();
 
 	// ########################## FORMS AUTHENTICATION HANDLERS ###########################
 
@@ -195,8 +201,9 @@ public class Application extends Controller {
 			session().clear();
 			throw new IllegalStateException("no valid session");
 		}		
-		
-		return new GameWebSocket(controller);
+		GameWebSocket socket = new GameWebSocket(controller);
+		webSocketMap.put(getActiveUser(), socket);
+		return socket;
 	}
 	
 	/**
@@ -220,6 +227,38 @@ public class Application extends Controller {
 		String newDao = requestData.get("dao");
 		getGameController().setDao(newDao);
 		return ok(de.linma.breakout.view.wui.views.html.showAdmin.render(getGameController().getDaoImpls(), getGameController().getDao()));
+	}
+	
+	/**
+	 * GET: /showUsers
+	 */
+	public Result showUsers(){
+		if (!getActiveUser().equals(SUPERUSER)) {
+			return redirect(routes.Application.index());
+		}
+		Map<String, String> userStateMap= new HashMap<String, String>();
+		for(Entry<String, IGameController> entry : gameControllerMap.entrySet()){
+			userStateMap.put(entry.getKey(), entry.getValue().getState().toString());
+		}
+		return ok(de.linma.breakout.view.wui.views.html.showUsers.render(userStateMap));
+	}
+	
+	/**
+	 * POST: /showUsers
+	 */
+	public Result kickUser(){
+		if (!getActiveUser().equals(SUPERUSER)) {
+			return redirect(routes.Application.index());
+		}
+		DynamicForm requestData = Form.form().bindFromRequest();
+		String userName = requestData.get("user");
+		
+		IGameController userGameController = gameControllerMap.get(userName);
+		userGameController.processMenuInput(MENU_ITEM.MNU_END);
+		webSocketMap.get(userName).close();
+		gameControllerMap.remove(userName);
+		
+		return showUsers();
 	}
 	
 	/**

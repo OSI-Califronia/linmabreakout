@@ -148,5 +148,9 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 		}
 	}
 	
+	public void close(){
+		out.close();
+	}
+	
 	
 }
