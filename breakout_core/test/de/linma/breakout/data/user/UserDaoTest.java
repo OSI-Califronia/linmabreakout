@@ -59,7 +59,7 @@ public class UserDaoTest extends TestCase {
 		testingDao = new UserDaoHibernate();
 		testingDao.setLogger(logger);
 		
-		daoTesting(0);
+		daoTesting(2);
 	}
 
 	private void daoTesting(int startEntry) {		
