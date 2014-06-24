@@ -16,6 +16,7 @@ import de.linma.breakout.communication.MENU_ITEM;
 import de.linma.breakout.controller.IGameController.PLAYER_INPUT;
 import de.linma.breakout.data.IPlayGrid;
 import de.linma.breakout.data.PlayGrid;
+import de.linma.breakout.data.highscore.HighscorePoster;
 import de.linma.breakout.data.highscore.dao.IHighscoreDao;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.impl.Ball;
@@ -34,6 +35,9 @@ public class TestGameController extends TestCase {
 	
 	@Mock
 	private IHighscoreDao highscoreDummyDao;
+	
+	@Mock
+	private HighscorePoster highscorePosterDummy;
 	
 	private IPlayGrid grid = new PlayGrid(500, 500);
 	

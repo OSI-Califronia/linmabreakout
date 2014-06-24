@@ -21,6 +21,9 @@ public class HighscoreDaoTest {
 	
 	@Mock
 	private Logger logger;
+	
+	@Mock
+	private IHighscoreDao dummyDao;
 
 	private IHighscoreDao testingDao;	
 	
@@ -95,6 +98,8 @@ public class HighscoreDaoTest {
 	public void testHighscorePost() {
 		poster.initialize("test", 50);
 		poster.run();
+		
+		testingDao = dummyDao;
 	}
 	
 	@After
