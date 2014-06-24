@@ -408,6 +408,7 @@ public class GameController extends ObservableGame implements IGameController {
 			break;
 		case MNU_LEVEL_CHOOSE:
 			cancelTimer();
+			actualSorce = 0;
 			this.setState(GAME_STATE.MENU_LEVEL_SEL);
 			break;
 		case MNU_LEVEL_EDITOR:

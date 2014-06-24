@@ -35,8 +35,6 @@ public class Application extends Controller {
 	@Inject
 	private Logger logger;
 
-//	@Inject
-//	@Getter
 	private IGameController gameController; // game instance
 	
 	// Map of active Users and their GameControllers
