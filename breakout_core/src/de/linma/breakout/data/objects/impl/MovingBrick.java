@@ -1,7 +1,5 @@
 package de.linma.breakout.data.objects.impl;
 
-import java.awt.Color;
-
 import de.linma.breakout.data.objects.IBall;
 
 /**
@@ -27,7 +25,7 @@ public class MovingBrick extends AbstractBrick {
 		super();
 		movingRangeX = DEFAULT_MOVING_RANGE;
 		frameCounter = 0;
-		getProperties().setProperty(PROP_COLOR, Color.blue.toString());
+		getProperties().setProperty(PROP_COLOR, "red");
 		getProperties().setProperty(PROP_IMG_PATH, "resources\\movingBrick.png");
 	}	
 	

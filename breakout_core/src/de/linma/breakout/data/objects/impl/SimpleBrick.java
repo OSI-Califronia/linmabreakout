@@ -1,6 +1,5 @@
 package de.linma.breakout.data.objects.impl;
 
-import java.awt.Color;
 
 /**
  * Data class for brick with fix size.
@@ -21,7 +20,7 @@ public class SimpleBrick extends AbstractBrick {
 	 */
 	public SimpleBrick(int x, int y) {
 		super(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		getProperties().setProperty(PROP_COLOR, Color.blue.toString());
+		getProperties().setProperty(PROP_COLOR, "blue");
 		getProperties().setProperty(PROP_IMG_PATH, "resources\\simpleBrick.png");
 	}
 	
