@@ -9,8 +9,8 @@ import java.util.Properties;
  */
 public interface IBrick extends IDecodable {
 
-	String PROP_COLOR = "color";
-	String PROP_IMG_PATH = "imgPath";
+	public static final String PROP_COLOR = "color";
+	public static final String PROP_IMG_PATH = "imgPath";
 
 	/**
 	 * This method gets called by the game controller

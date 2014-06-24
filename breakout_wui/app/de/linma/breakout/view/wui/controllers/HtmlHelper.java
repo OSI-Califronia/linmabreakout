@@ -9,7 +9,6 @@ import de.linma.breakout.controller.IGameController;
 import de.linma.breakout.data.highscore.IHighscore;
 import de.linma.breakout.data.objects.IBall;
 import de.linma.breakout.data.objects.IBrick;
-import de.linma.breakout.data.objects.impl.MovingBrick;
 
 public class HtmlHelper {
 	
@@ -69,12 +68,7 @@ public class HtmlHelper {
 		// add normal bricks
 		for(IBrick brick : gameController.getBricks()) {
 			HtmlBrick htmlBrick = new HtmlBrick(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());
-			
-			if (brick instanceof MovingBrick) {
-				htmlBrick.color = "red";
-			} else {
-				htmlBrick.color = "blue";
-			}
+			htmlBrick.color = brick.getProperties().getProperty(IBrick.PROP_COLOR);
 			
 			bricks.add(htmlBrick);
 		}
