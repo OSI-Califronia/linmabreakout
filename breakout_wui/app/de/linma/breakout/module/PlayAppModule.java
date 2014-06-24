@@ -14,6 +14,7 @@ import de.linma.breakout.data.highscore.dao.IHighscoreDao;
 import de.linma.breakout.data.highscore.dao.impl.hibernate.HighscoreDaoHibernate;
 import de.linma.breakout.data.user.dao.IUserDao;
 import de.linma.breakout.data.user.dao.impl.couchDB.UserDaoCouchDB;
+import de.linma.breakout.data.user.dao.impl.db4o.UserDaoDB4O;
 import de.linma.breakout.data.user.dao.impl.hibernate.UserDaoHibernate;
 import de.linma.breakout.view.wui.controllers.Application;
 
@@ -42,7 +43,7 @@ public class PlayAppModule extends AbstractModule {
 		IUserDao defaultDao = new UserDaoHibernate();
 		bind(IUserDao.class).toInstance(defaultDao);
 		MapBinder<String, IUserDao> daoBinder = MapBinder.newMapBinder(binder(), String.class, IUserDao.class);
-//		daoBinder.addBinding("DB4O").toInstance(new UserDaoDB4O("breakout1_07.db4o"));
+		daoBinder.addBinding("DB4O").toInstance(new UserDaoDB4O("breakout1_07.db4o"));
 		daoBinder.addBinding("CouchDB").toInstance(new UserDaoCouchDB("http://lenny2.in.htwg-konstanz.de:5984", "breakout1_07"));
 		daoBinder.addBinding("Hibernate").toInstance(defaultDao);
 		
