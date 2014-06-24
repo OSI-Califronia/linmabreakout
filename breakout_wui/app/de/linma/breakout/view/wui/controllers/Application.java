@@ -134,13 +134,16 @@ public class Application extends Controller {
 	private void initializeGame(IUser userDB) {
 		// fill session
 		session().clear();
-		session("UserName", userDB.getUsername());
+		session("UserName", userDB.getUsername());		
 		
 		// get new GameController Object
 		if (!gameControllerMap.containsKey(userDB.getUsername())) {				
 			gameControllerMap.put(userDB.getUsername(), getGameController());
 			gameController = null;
 		}
+		
+		// fill gameController
+		getActiveGameController(userDB.getUsername()).initialize(userDB.getUsername());
 	}
 
 	// #################### HANDLERS FOR OPEN ID AUTHENTICATION ##################
@@ -231,7 +234,6 @@ public class Application extends Controller {
 		// create new GameController
 		if (gameController == null) {
 			gameController = AppGlobal.getAppInjector().getInstance(IGameController.class);
-			gameController.initialize(getActiveUser());
 		}
 		return gameController;
 	}

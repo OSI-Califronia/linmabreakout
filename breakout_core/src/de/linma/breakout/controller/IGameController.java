@@ -199,4 +199,10 @@ public interface IGameController extends IObservableGame {
 	
 	Set<String> getDaoImpls();
 	
+	/**
+	 * Returns the Score of Actual Running Game otherwise null
+	 * @return score
+	 */
+	public Integer getActualSorce();
+	
 }

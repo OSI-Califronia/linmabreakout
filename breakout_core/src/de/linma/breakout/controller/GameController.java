@@ -92,7 +92,7 @@ public class GameController extends ObservableGame implements IGameController {
 	private int levelIndex;
 	
 	private String actualUser;
-	private int actualSorce; // score of one User
+	private int actualSorce; // score of one User	
 
 	private static final String LEVEL_PATH = "levels/";
 	private static final int FRAME_DELAY = 10;
@@ -865,5 +865,17 @@ public class GameController extends ObservableGame implements IGameController {
 	 */
 	public Set<String> getDaoImpls() {
 		return userDaoMap.keySet();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see de.linma.breakout.controller.IGameController#getActualSorce()
+	 */
+	public Integer getActualSorce() {
+		// game is not running
+		if (getState() != GAME_STATE.RUNNING) {
+			return null;
+		}
+		return actualSorce;
 	}
 }

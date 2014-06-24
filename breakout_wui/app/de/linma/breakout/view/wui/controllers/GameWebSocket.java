@@ -76,6 +76,7 @@ public class GameWebSocket extends WebSocket<String> implements IGameObserver {
 		}
 		
 		Html playGrid = de.linma.breakout.view.wui.views.html.gamegrid.render(
+				gameController.getActualSorce(),
 				gameController.getGridSize().width,
 				gameController.getGridSize().height,
 				HtmlHelper.getBricks(gameController), 
