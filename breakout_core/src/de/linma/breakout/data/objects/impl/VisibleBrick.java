@@ -1,7 +1,5 @@
 package de.linma.breakout.data.objects.impl;
 
-import java.awt.Color;
-
 import de.linma.breakout.data.objects.IBall;
 
 /**
@@ -27,7 +25,7 @@ public class VisibleBrick extends AbstractBrick {
 		isVisible = true;
 		frameCounter = 0;
 		maxFrameCounter = 0;
-		getProperties().setProperty(PROP_COLOR, Color.yellow.toString());
+		getProperties().setProperty(PROP_COLOR, "yellow");
 		getProperties().setProperty(PROP_IMG_PATH, "resources\\movingBrick.png");
 	}
 	
@@ -78,10 +76,10 @@ public class VisibleBrick extends AbstractBrick {
 		
 		if (frameCounter >= maxFrameCounter) {
 			if (isVisible) {
-				getProperties().setProperty(PROP_COLOR, Color.black.toString());
+				getProperties().setProperty(PROP_COLOR, "black");
 				isVisible = false;
 			} else {
-				getProperties().setProperty(PROP_COLOR, Color.yellow.toString());
+				getProperties().setProperty(PROP_COLOR, "yellow");
 				isVisible = true;
 			}
 			frameCounter = 0;
